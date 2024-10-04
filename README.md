@@ -1,4 +1,9 @@
 # MysticTools
+Pagina Web de The Mystic Bot y Demas Herramientas.
+Entra a la Pagina Web: weskerty.github.io/MysticTools/
+
+
+# Plugins Extra 
 Para agregar tus plugins puedes hacer un fork y luego solicitar un pull con los cambios que hiciste.
 Agrega tu Plugin a la Carpeta Plugins/TuNombre/TuPlugin.js
 Agrega tus cambios al final de en web/es.html pero antes del </div> final 
