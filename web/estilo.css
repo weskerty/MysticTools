@@ -49,6 +49,23 @@ code {
     backdrop-filter: blur(7px);
 }
 
+.contenedor-imagenes {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2px;
+    width: "80%"; 
+}
+
+.contenedor-texto {
+    margin-bottom: 20px; 
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2px;
+    width: "80%"; 
+}
+
 #disqus_thread {
     margin-top: 20px;
 }
@@ -82,3 +99,5 @@ blockquote.red {
         background-color: rgba(0, 0, 0, 0.7);
     }
 }
+
+
