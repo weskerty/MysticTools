@@ -1,6 +1,6 @@
 # MysticTools
-Pagina Web de The Mystic Bot y Demas Herramientas.
-Entra a la Pagina Web: weskerty.github.io/MysticTools/
+## Pagina Web de The Mystic Bot y Demas Herramientas.
+### Entra a la Pagina Web: https://weskerty.github.io/MysticTools/
 
 
 # Plugins Extra 
@@ -11,42 +11,76 @@ Agrega tus cambios al final de en web/es.html pero antes del </div> final
 
 ```
 <blockquote>	
-<h1>📷 Nombre de tu Plugin</h1>
-<p> Este Plugin tiene la Capacidad de... </p>
+<h1> Titulo  </h1>
+<p> Descripcion </p>
 <details>
   <summary>🖼️ Demostracion:</summary>
-  <img src="LINK DIRECTO A IMAGEN" width="70%" height="auto" loading="lazy" />
-  <video src="LINK DIRECTO A VIDEO" controls width="100%" height="auto" loading="lazy"></video>
+	
+<iframe width="90%" height="315" src="https://youtube.com/embed/N8g-R575vJU" title="YouTube video player" allowfullscreen></iframe>
 </details>
 </br>
-<details>
-  <summary>🗳️ Instalacion</summary>
-  <p>[✅] Plug and play!</p>
-<a href="https://wa.me/?text=URLENCODE">
-  <img src="https://img.shields.io/badge/💾NOMBREDELBOTON💾-25D366?logo=whatsapp&logoColor=fff&style=flat" alt="Reenviar al Bot para Instalar Plugin a Travez de WhatsApp" height= "30px" loading="lazy"/>
+</details>
+		<details>
+           <summary>🗳️ Instalacion</summary>
+		  
+
+<blockquote class="red">
+<p> Advertencias Opcionales </p>
+<p> Advertencias Opcionales </p>
+</blockquote>
+
+<h2>🔩 Dependencias </h1>
+<p>Instalacion Paquetes del Sistema</p>
+<a href="https://wa.me/?text=%24%20choco%20install%20-y%20python%20--override%20--install-arguments%20%27%2Fquiet%20InstallAllUsers%3D1%20PrependPath%3D1%20TargetDir%3DC%3A%5CPython3%27">
+  <img src="https://img.shields.io/badge/Windows🔩-0078D6?style=for-the-badge&logo=windows&logoColor=white&style=flat" alt="Reenviar al Bot para Instalar Dependencias a Travez de WhatsApp" height= "30px" loading="lazy"/>
+</a>
+			.
+<a href="https://wa.me/?text=%24%20apt%20install%20python3%20python3-pip%20-y">
+  <img src="https://img.shields.io/badge/Linux-Termux-Server🔩-A81D33?style=for-the-badge&logo=debian&logoColor=white&style=flat" height= "30px" loading="lazy"/>
+</a>
+</br>
+			</br>
+<p>En Windows, en caso de que no tengas choco eso Fallara. Deberas Instalar <a href="https://www.python.org/downloads/">Python↗️</a> Manualmente y Ajustarlo para Agregarlo a Path e Instalar PIP</p>
+
+		</br>
+
+<p>Listo Explicacion y Proseguir </p>
+			</br>
+
+<h2>⬇️ Instalar Dependencia PIP o NPM</h2>			
+<a href="https://wa.me/?text=%24%20pip%20install%20-U%20--pre%20%22yt-dlp%5Bdefault%5D%22">
+  <img src="https://img.shields.io/badge/InstalacionConPIP-FFD43B?style=for-the-badge&logo=python&logoColor=blue&style=flat" height= "30px" loading="lazy"/>
 </a>
 
-<h2>👀 Uso</h2>
-<code>&lt;prefijo&gt;getfile + &lt;ruta&gt;</code>
+</br>
+<p>Explicacion y Proseguir con la Instalacion del Plugin</p>
 
-<h2>📝 Ejemplo:</h2>
-<code>Comandos para su Uso</code>
+			</br>
+
+<h2>⚙️ Plugin</h2>
+
+
+<a href="https://wa.me/?text=.plg%20https%3A%2F%2Fraw.githubusercontent.com%2Fweskerty%2FMysticTools%2Frefs%2Fheads%2Fmain%2FPlugins%2FMarcoRota%2Fdla.js">
+  <img src="https://img.shields.io/badge/PluginMystic-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E&style=flat" height= "30px" loading="lazy"/>
+</a>
+
+			</br>
+
+<p>Si no Sucedio Ningun error, El Plugin Ahora Debe ser Funcional.</p>
+
+</details></br>
 
 <details>
-  <summary>🛠️ Dependencias Usadas(en caso de que quieras Agregar. Opcional.) </summary>
-<a href="https://www.npmjs.com/package/fs">fs</a>
-</details>
-
-</blockquote>
+  <summary>⚒️ Uso:</summary>
+<p>Explicacion de Funciones</p>
+<p>Funcion para?</p>
+<code>comando </code></br>
+	
 </details>
 ```
 
 O si no tienes tiempo puedes dejarlo en issues y yo lo agregare cuando tenga tiempo.
 
-
-
-
-</br>
 
 
 
