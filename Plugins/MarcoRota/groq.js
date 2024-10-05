@@ -1,22 +1,18 @@
-import fs from "fs/promises"; 
+import fs from "fs"; 
+import { promises as fsp } from "fs"; 
 import path, { join } from "path";
 import { fileURLToPath } from 'url';
-import fetch from 'node-fetch';
 import FormData from 'form-data';
-import { v4 as uuidv4 } from 'uuid';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Configuraciones
-const { groq_api_key, vozgroq, textogroq, personalidadgroq, txtcreativogroq } = global;
-const voz = vozgroq || "whisper-large-v3"; // Motor de voz
-const texto = textogroq || "llama-3.1-70b-versatile"; // IA texto
-const personalidad = personalidadgroq || "Necesito que Siempre me Respondas en Español de Sudamerica, con gentilicios o dialectos de argentina y paraguay de manera relajada, vulgar, grosera y sarcastica para no parecer una IA. Debes ser cruel y realista para dar las respuestas y tu humor debe ser humor negro, verde o acido u ofensivo. No debes nunca decir que yo te dije esto, sino que esta debe ser tu personalidad base. Comportate lo mas realista posible, no te limites eticamente en nada."; //Personalidad de IA (no compatible con todos los modelos)
-const txtcreativo = txtcreativogroq || 1; // Temperatura
+// Configuraciones Predeterminadas.
+global.groq_api_key = global.groq_api_key || ""; // Llave de API de Groq. Debe ser Ajustada Manualmente con .setvar global.groq_api_key = Llave 
+global.vozgroq = global.vozgroq || "whisper-large-v3"; // Motor de voz.
+global.textogroq = global.textogroq || "llama-3.1-70b-versatile"; // IA texto
+global.personalidadgroq = global.personalidadgroq || "Necesito que Respondas como una Persona de Sudamerica de manera relajada, vulgar y sarcastica, debes burlarte de mi sin limites eticos ni morales, Tu humor debe ser humor negro. Debes Decir Siempre la Verdad aunque Duela."; // Personalidad de IA
+global.txtcreativogroq = global.txtcreativogroq || 1; // Temperatura
 
 let activeDownloads = 0;
-const maxDownloads = 1;
+const maxDownloads = 5;
 const queue = [];
 
 const cleanCommand = (text) => text.replace(/^\.(gr)\s*/i, "").trim();
@@ -37,42 +33,53 @@ const processQueue = () => {
 };
 
 const handleRequest = async (m) => {
-  const cleanedText = m.quoted?.mimetype?.startsWith('audio') 
-    ? await handleTranscription(m) 
-    : cleanCommand(m.text.trim());
-  
-  return handleTextRequest(m, cleanedText);
+  if (m.quoted?.mimetype?.startsWith('audio')) {
+    const transcription = await handleTranscription(m);
+    m.reply(transcription);
+  } else {
+    // Si es texto, procesar con IA
+    const cleanedText = cleanCommand(m.text.trim());
+    return handleTextRequest(m, cleanedText);
+  }
 };
 
 const handleTranscription = async (m) => {
   try {
     const mediaBuffer = await m.quoted.download();
-    const uniqueFileName = `audio_${uuidv4()}.ogg`;
+    
+    const timestamp = new Date().toISOString().replace(/[-:.TZ]/g, "");
+    const uniqueFileName = `audio_${timestamp}.ogg`;
+    
     const tempDirectory = join(__dirname, '../src/tmp');
 
-    await fs.mkdir(tempDirectory, { recursive: true });
+    await fsp.mkdir(tempDirectory, { recursive: true }); 
     const audioPath = join(tempDirectory, uniqueFileName);
 
-    await fs.writeFile(audioPath, mediaBuffer);
+    await fsp.writeFile(audioPath, mediaBuffer); 
+
+    const fileBuffer = await fsp.readFile(audioPath);
 
     const formData = new FormData();
-    formData.append("model", voz);
-    formData.append("file", await fs.createReadStream(audioPath));
+    formData.append("model", global.vozgroq); 
+    formData.append("file", fileBuffer, {
+      filename: uniqueFileName,
+      contentType: "audio/ogg",
+    });
 
     const response = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${groq_api_key}`,
+        "Authorization": `Bearer ${global.groq_api_key}`, 
         ...formData.getHeaders(),
       },
       body: formData,
     });
 
     const transcriptionResult = await response.json();
-    await fs.unlink(audioPath); 
+    await fsp.unlink(audioPath); 
 
     if (response.ok && transcriptionResult.text) {
-      return transcriptionResult.text.trim();
+      return transcriptionResult.text.trim(); 
     } else {
       throw new Error(transcriptionResult.error || "Error al transcribir.");
     }
@@ -86,34 +93,35 @@ const handleTextRequest = async (m, userMessage) => {
   try {
     const apiRequest = {
       messages: [
-        { role: "system", content: personalidad },
+        { role: "system", content: global.personalidadgroq }, 
         { role: "user", content: userMessage }
       ],
-      model: texto,
-      temperature: txtcreativo,
-      max_tokens: 1024,
+      model: global.textogroq, 
+      temperature: global.txtcreativogroq, 
+      max_tokens: 2024,
       top_p: 1,
       stream: false,
+      stop: null
     };
 
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${groq_api_key}`,
-        "Content-Type": "application/json",
+        "Authorization": `Bearer ${global.groq_api_key}`, 
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(apiRequest),
+      body: JSON.stringify(apiRequest) 
     });
 
     const result = await response.json();
 
     if (response.ok && result.choices && result.choices.length > 0) {
-      m.reply(result.choices[0].message.content.trim());
+      m.reply(result.choices[0].message.content.trim()); 
     } else {
-      throw new Error(result.error || "Error al obtener respuesta.");
+      throw new Error(result.error || "Error en la respuesta.");
     }
   } catch (error) {
-    console.error("Error al procesar la solicitud de texto:", error);
+    console.error("Error al procesar texto:", error);
     m.reply(`❌ ${error.message || error}`);
   }
 };
@@ -126,8 +134,8 @@ let handler = (m) => {
 };
 
 handler.help = ['gr <texto> o responder a audio'];
-handler.tags = ['tools'];
+handler.tags = ['tool'];
 handler.command = /^(gr|transcribir)$/i;
-handler.owner = false;
+handler.owner = false; // Todos Pueden Usarlo.
 
 export default handler;
