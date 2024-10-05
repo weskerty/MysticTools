@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#Script para Reiniciar Scripts en caso de que se Cierren.
 # Carpeta de scripts
 carpeta="$HOME/script/"
 

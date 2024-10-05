@@ -17,12 +17,12 @@ install_debian() {
 
 install_arch() {
     echo "Usando PACMAN..."
-    pacman -Sy --noconfirm gcc make wget curl git ffmpeg imagemagick python python-pip nodejs npm
+    sudo pacman -Sy --noconfirm gcc make wget curl git ffmpeg imagemagick python python-pip nodejs npm
 }
 
 install_fedora() {
-    echo "Detectando Fedora, No Probado. Usando DNF..."
-    dnf -y install gcc make wget curl git ffmpeg ImageMagick python3 python3-pip nodejs npm
+    echo "Usando DNF (No Probado)..."
+    sudo dnf -y install gcc make wget curl git ffmpeg ImageMagick python3 python3-pip nodejs npm
 }
 
 case "$OS" in
@@ -50,5 +50,5 @@ chmod +x ~/update.sh ~/script/mystic.sh ~/alive.sh && \
 git clone https://github.com/BrunoSobrino/TheMystic-Bot-MD.git mystic && \
 cd mystic && \
 npm install --force && \
-npm start
+npm start qr
 
