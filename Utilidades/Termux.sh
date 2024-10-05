@@ -4,7 +4,7 @@ proot-distro login debian -- bash -c "
   apt-get update && \ 
   curl -fsSL https://deb.nodesource.com/setup_current.x -o nodesource_setup.sh && \
   bash nodesource_setup.sh
-  apt-get -y gcc make wget curl git ffmpeg imagemagick python3 python3-pip nodejs && \
+  apt-get install -y gcc make wget curl git ffmpeg imagemagick python3 python3-pip nodejs && \
   wget https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/refs/heads/master/web/Guias/Utilidades/update.sh -O ~/update.sh && \
   mkdir -p ~/script && wget https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/refs/heads/master/web/Guias/Utilidades/mystic.sh -O ~/script/mystic.sh && \
   wget  https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/refs/heads/master/web/Guias/Utilidades/alive.sh -O ~/alive.sh && \
