@@ -18,7 +18,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #232323; 
+            background-color: #232323;
             z-index: 1000;
         }
 
@@ -54,12 +54,16 @@
         }
 
         // Carga el contenido de la URL proporcionada
-        async function loadContent(url, fallbackUrl = null) {
+        async function loadContent(url, fallbackUrl = null, updateHistory = true) {
             try {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error(`Error fetching ${url}: ${response.statusText}`);
                 document.getElementById('content').innerHTML = await response.text();
                 loadDisqus(); // Carga Disqus si el contenido se cargó correctamente
+
+                if (updateHistory) {
+                    history.pushState({ path: url }, '', url); // Actualiza la URL sin recargar
+                }
             } catch (error) {
                 console.error(`Error cargando contenido: ${error.message}`);
                 if (fallbackUrl) {
@@ -135,8 +139,12 @@
             }
         });
 
-        // Recarga la página al cambiar el estado del historial
-        window.onpopstate = () => location.reload();
+        // Recarga el contenido sin recargar la página al usar el botón "Atrás"
+        window.onpopstate = (event) => {
+            if (event.state && event.state.path) {
+                loadContent(event.state.path, null, false);
+            }
+        };
     </script>
 
     <!-- Widget de Discord -->
