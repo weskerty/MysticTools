@@ -1,4 +1,4 @@
-import fs from 'fs/promises';
+import fs from 'fs';
 import path, { join, basename } from 'path';
 import puppeteer from 'puppeteer';
 import fetch from 'node-fetch';
@@ -13,7 +13,7 @@ async function initializeBrowser() {
   if (!browserInstance) {
     browserInstance = await puppeteer.launch({
       headless: true,
-      args: [
+      args: [ // Banderas para Eficiencia. Se pueden Borrar o Agregar mas. Utilizar coma por cada agregado.
         "--disable-features=BlockInsecurePrivateNetworkRequests",
         "--disable-features=IsolateOrigins", 
         "--disable-site-isolation-trials", 
@@ -29,8 +29,8 @@ async function initializeBrowser() {
         '--disable-gl-drawing-for-tests',
         '--disable-canvas-aa', // Disable antialiasing on 2d canvas
         '--disable-2d-canvas-clip-aa',
-        //'--user-data-dir=/$HOME/.config/chromium/', //ubicacion de los datos. util para que utilice tus credenciales. Riesgoso en caso de que sea plugin publico y agregues credenciales privadas.
-        '--no-sandbox' // banderas para probar eficiencia, puedes borrarlas.
+	    	'--no-sandbox', 
+        //'--user-data-dir=/$HOME/.config/chromium/' //ubicacion de los datos. util para que utilice tus credenciales. Riesgoso en caso de que sea plugin publico y agregues credenciales privadas.
       ],
       //executablePath: '/usr/bin/chromium'  // Ruta a Chromium en tu sistema, si no funciona este plugin debes descomentar y agregar la ubicacion de tu instalacion de chomium o firefox. Requerido para Termux o Sistema ARM 
     });
@@ -42,7 +42,7 @@ async function saveAsMHTML(url) {
   const browser = await initializeBrowser();
   const page = await browser.newPage();
   try {
-    await page.goto(url, { timeout: 90000, waitUntil: 'networkidle2' }); // esto es el tiempo limite antes de que falle el intento, actual 1,5m
+    await page.goto(url, { timeout: 90000, waitUntil: 'networkidle2' });
     const cdp = await page.target().createCDPSession();
     const { data } = await cdp.send('Page.captureSnapshot', { format: 'mhtml' });
     return data;
@@ -63,7 +63,6 @@ async function saveAsPDF(url) {
   }
 }
 
-
 async function downloadImages(url) {
   const browser = await initializeBrowser();
   const page = await browser.newPage();
@@ -72,7 +71,7 @@ async function downloadImages(url) {
     const imageUrls = await page.$$eval('img', imgs => 
       imgs.map(img => ({ src: img.src, size: img.naturalWidth * img.naturalHeight }))
     );
-    const filteredImages = imageUrls.filter(img => img.size > 10240); // Tamaño Imagen 10KB
+    const filteredImages = imageUrls.filter(img => img.size > 11240); // Tamaño Imagen 10KB
     return filteredImages.map(img => img.src);
   } finally {
     await page.close(); 
@@ -85,7 +84,9 @@ async function handleDownloadRequest(url, conn, m, type = 'mhtml') {
     const timestamp = Date.now();
     const filePath = join(tempDirectory, `page_${timestamp}.${type}`);
 
-    await fs.mkdir(tempDirectory, { recursive: true });
+    if (!fs.existsSync(tempDirectory)) {
+      fs.mkdirSync(tempDirectory, { recursive: true });
+    }
 
     let content;
     if (type === 'mhtml') {
@@ -96,10 +97,10 @@ async function handleDownloadRequest(url, conn, m, type = 'mhtml') {
       content = await saveAsPDF(url);
     }
 
-    await fs.writeFile(filePath, content);
+    fs.writeFileSync(filePath, content);
     await conn.sendFile(m.chat, filePath, fileName, '❤️', m);
 
-    await fs.unlink(filePath);
+    fs.unlinkSync(filePath);
   } catch (error) {
     await sendErrorMessage(m, conn, `❌ ${error.message}`);
   } finally {
@@ -107,7 +108,6 @@ async function handleDownloadRequest(url, conn, m, type = 'mhtml') {
     processQueue();
   }
 }
-
 
 async function handleImageDownloadRequest(url, conn, m) {
   try {
@@ -125,10 +125,10 @@ async function handleImageDownloadRequest(url, conn, m) {
       const response = await fetch(imageUrl);
       const buffer = await response.buffer();
 
-      await fs.writeFile(filePath, buffer);
+      fs.writeFileSync(filePath, buffer);
       await conn.sendFile(m.chat, filePath, fileName, '', m);
 
-      await fs.unlink(filePath);
+      fs.unlinkSync(filePath);
     }
   } catch (error) {
     await sendErrorMessage(m, conn, `❌ ${error.message}`);

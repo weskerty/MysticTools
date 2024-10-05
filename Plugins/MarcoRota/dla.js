@@ -1,7 +1,9 @@
 import fs from "fs";
 import path, { join, basename } from "path";
 import { exec } from "child_process";
+import { promisify } from "util";  // Para hacer que exec sea promisificado.
 
+const execPromise = promisify(exec);
 const __dirname = path.resolve();
 const ytDlpTempDirectory = path.join(process.cwd(), 'src/tmp/YTDLP');
 const curlTempDirectory = path.join(process.cwd(), 'src/tmp/CURL');
@@ -14,7 +16,6 @@ const filterArgs = (args, filter) => args.filter(filter);
 
 const processQueue = () => {
   if (activeDownloads >= maxDownloads) {
-    
     const { m } = queue[0]; 
     m.reply(`Hay ${maxDownloads} Descargas Activas, tu Archivo Tardara un Rato.`);
     return;
@@ -70,7 +71,7 @@ const execWithoutUrl = async (m, options) => {
   }
 };
 
-// Función para manejar YT-DLP
+// YT-DLP
 const downloadAndSend = async (m, url, options) => {
   let outputFilePathPrefix = join(ytDlpTempDirectory, `download_${Date.now()}`);
   try {
@@ -97,10 +98,15 @@ const downloadWithCurl = async (m, url, options) => {
   try {
     await prepareDirectory(curlTempDirectory);
     await m.reply(`⏳ Descargando con CURL...`);
+    
+    // Ejecutamos curl
     await execPromise(`curl --max-filesize 1500000000 ${options} -o "${outputFilePath}" "${url}"`);
-    fs.access(outputFilePath, fs.constants.F_OK, (err) => {
-      if (!err) sendDownloadedFile(m, outputFilePath);
-    });
+    
+    if (fs.existsSync(outputFilePath)) {
+      await sendDownloadedFile(m, outputFilePath);
+    } else {
+      throw new Error(`Archivo no descargado: ${outputFilePath}`);
+    }
   } catch (error) {
     await sendErrorMessage(m, error, `curl ${options} -o "${outputFilePath}" "${url}"`);
   } finally {
@@ -122,15 +128,6 @@ const updateYtDlp = async (m) => {
       await sendErrorMessage(m, error2, "python -m pip install -U --pre yt-dlp");
     }
   }
-};
-
-const execPromise = (command) => {
-  return new Promise((resolve, reject) => {
-    exec(command, (error, stdout, stderr) => {
-      if (error) reject(stderr || stdout || error);
-      else resolve(stdout);
-    });
-  });
 };
 
 const prepareDirectory = (dir) => {
@@ -158,6 +155,8 @@ const sendDownloadedFile = (m, filePath) => {
       }, { quoted: m }, () => {
         fs.unlink(filePath, (err) => { if (err) console.error(err); });
       });
+    } else {
+      console.error("Error al enviar el archivo:", err);
     }
   });
 };
