@@ -9,7 +9,8 @@ YELLOW='\033[1;33m'
 NC='\033[0m' 
 
 #echo -e "${YELLOW}######### Actualizando Sistema...${NC}"
-#pacman -Syu --noconfirm 
+#pacman -Syu --noconfirm
+#apt-get update && apt-get upgrade -y
 
 cd "$HOME/mystic/" || { echo -e "${RED}######### Error. No existe Mystic.${NC}"; exit 1; }
 
