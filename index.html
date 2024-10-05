@@ -4,16 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mystic Bot</title>
-    
-
-    <meta name="description" content="Instalador de Mystic Bot">
-    
-    <!-- Icono GIF en la pestaña -->
-    <link rel="icon" type="image/gif" href="web/favicon.gif">
-
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="web/favicon.ico">
     <link rel="stylesheet" href="web/estilo.css">
-
+    <meta name="description" content="Mystic Bot Guia y Mas">
     <style>
         /* Estilo de la pantalla de carga */
         .loading-screen {
@@ -25,7 +19,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #232323;
+            background-color: #232323; 
             z-index: 1000;
         }
 
@@ -34,7 +28,7 @@
             font-family: 'Comfortaa', sans-serif;
         }
 
-
+        /* Clase para ocultar elementos */
         .hide {
             display: none;
         }
@@ -55,33 +49,29 @@
     </div>
 
     <script>
-
+        // Oculta la pantalla de carga
         function hideLoadingScreen() {
             document.getElementById('loading-screen').classList.add('hide');
         }
 
- 
-        async function loadContent(url, fallbackUrl = null, updateHistory = true) {
+        // Carga el contenido de la URL proporcionada
+        async function loadContent(url, fallbackUrl = null) {
             try {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error(`Error fetching ${url}: ${response.statusText}`);
                 document.getElementById('content').innerHTML = await response.text();
-                loadDisqus(); 
-
-                if (updateHistory) {
-                    history.pushState({ path: url }, '', url); 
-                }
+                loadDisqus(); // Carga Disqus si el contenido se cargó correctamente
             } catch (error) {
                 console.error(`Error cargando contenido: ${error.message}`);
                 if (fallbackUrl) {
-                    loadContent(fallbackUrl); 
+                    loadContent(fallbackUrl); // Intenta cargar el fallback si hay error
                 } else {
                     document.getElementById('content').innerHTML = `<p>Error Cargando: ${error.message}</p>`;
                 }
             }
         }
 
-
+        // Carga Disqus para comentarios
         function loadDisqus() {
             const disqusDiv = document.createElement('div');
             disqusDiv.id = 'disqus_thread';
@@ -98,9 +88,9 @@
             document.body.appendChild(s);
         }
 
-  
+        // Devuelve la URL localizada según el idioma del navegador
         function getLocalizedUrl(urlBase) {
-            const lang = navigator.language.slice(0, 2); 
+            const lang = navigator.language.slice(0, 2); // Obtener el código de idioma
             const langMap = {
                 es: 'es.html',
                 pt: 'pt.html',
@@ -112,7 +102,7 @@
             return `${urlBase}${langMap[lang] || 'ingles.html'}`;
         }
 
-
+        // Carga el contenido localizado
         function loadLocalizedContent(urlBase) {
             const localizedUrl = getLocalizedUrl(urlBase);
             const fallbackUrl = `${urlBase}ingles.html`;
@@ -123,16 +113,16 @@
         document.addEventListener("DOMContentLoaded", () => {
             const bgVideo = document.getElementById('bg-video');
 
-      
+            // Ocultar pantalla de carga después de 5 segundos
             const timeoutId = setTimeout(hideLoadingScreen, 5000);
 
-            
+            // Intentar cargar el contenido localizado inmediatamente
             loadLocalizedContent('web/');
 
-      
+            // Ocultar la pantalla de carga cuando el video esté listo, si no se ha ocultado aún
             bgVideo.addEventListener('loadeddata', () => {
-                clearTimeout(timeoutId); 
-                hideLoadingScreen(); 
+                clearTimeout(timeoutId); // Cancelar el timeout si se ha cargado el video
+                hideLoadingScreen(); // Ocultar la pantalla de carga
             });
         });
 
@@ -146,18 +136,8 @@
             }
         });
 
-        function getPreviousFolder(url) {
-            const urlSegments = url.split('/');
-            urlSegments.pop(); 
-            return urlSegments.join('/') + '/'; 
-        }
-
-        window.onpopstate = (event) => {
-            const previousUrl = getPreviousFolder(window.location.href);
-            if (event.state && event.state.path) {
-                loadContent(previousUrl, null, false);
-            }
-        };
+        // Recarga la página al cambiar el estado del historial
+        window.onpopstate = () => location.reload();
     </script>
 
     <!-- Widget de Discord -->
