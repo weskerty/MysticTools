@@ -1,92 +1,55 @@
 @echo off
-setlocal
+echo Bienvenido. Si Tienes Problemas Contacta con Nosotros en bit.ly/MSOS
+timeout /t 7
+if exist "%USERPROFILE%\mystic\" (
+    goto ejecutar
+)
 
-::Instalacion Generica con NPM, Se Puede Cambiar las Variables para ser utilizado por otro bot.
-
-:: Aqui las Dependencias, deben estar en Choco.
-set dependencias=python nodejs ffmpeg-full git ImageMagick -y --allow-downgrade --ignore-dependencies --force-dependencies
-:: Aqui la Ubicacion de Instalacion 
-set botpath=%USERPROFILE%\mystic
-:: Aqui el Repo 
-set repo=https://github.com/BrunoSobrino/TheMystic-Bot-MD.git
-:: Aqui el Nombre del bot para ser mostrado en los Mensajes de estado.
-set botname=Mystic
-
-
-
-echo ######### Verificando...
-choco -v >nul 2>&1
+echo ########Analizando Paquetes Requeridos...
+where git >nul 2>nul
 if %errorlevel% neq 0 (
-    echo ######### Instalando Recursos Necesarios. Esto Tomara Tiempo, Relajate :)
-
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "& { [System.Net.ServicePointManager]::Expect100Continue = $false; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) } -NoNewWindow -Wait"
-    
-    if %errorlevel% neq 0 (
-        echo ######### Error en la instalacion de Chocolatey. Verifica tu Internet o Contacta con Soporte.
-        pause
-        exit /b
-    )
+    set git_missing=1
 )
 
-IF NOT EXIST "%botpath%" (
-    echo ######### Instalando %botname%. Esto Tomara aun mas Tiempo, Relajate :)
-    choco install %dependencias% >nul 2>&1
-    
-    if %errorlevel% neq 0 (
-        echo ######### Error en la instalacion de dependencias. Contacta con Soporte.
-        pause
-        exit /b
-    )
-
-    git clone %repo% "%botpath%" >nul 2>&1
-    if %errorlevel% neq 0 (
-        echo ######### Error al clonar. Verifica tu Internet.
-        pause
-        exit /b
-    )
-    
-    cd "%botpath%"
-    npm install >nul 2>&1
-	cd "%botpath%" && npm start 
-	
-)
-
-echo ######### Verificando Actualizaciones...
-
-choco upgrade all -y --allow-downgrade --ignore-dependencies --force-dependencies >nul 2>&1
-choco install %dependencias% >nul 2>&1
+where node >nul 2>nul
 if %errorlevel% neq 0 (
-    echo ######### Error al actualizar dependencias. Continuando igualmente...
+    set nodejs_missing=1
 )
 
-cd "%botpath%" || (
-    echo ######### Error: No existe el directorio %botname% WTF.
-    pause
-    exit /b
-)
-
-git pull %repo% > git_output.txt 2>&1
+where pip >nul 2>nul
 if %errorlevel% neq 0 (
-    echo ######### Error al intentar actualizar el repositorio.
-    pause
-    exit /b
+    set python_pip_missing=1
 )
 
-findstr "Already up to date" git_output.txt >nul
-if %errorlevel% equ 0 (
-    echo ######### %botname% ya actualizado.
-) else (
-    echo ######### %botname% actualizado.
-    npm install --force >nul 2>&1 || (
-        echo ######### Error en npm. Continuando igualmente...
-    )
+where choco >nul 2>nul
+if %errorlevel% neq 0 (
+    echo ########Instalando Chocolatey...
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "& { [System.Net.ServicePointManager]::Expect100Continue = $false; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) }" -NoNewWindow -Wait
 )
 
-npm start || (
-    echo ######### Error al iniciar %botname%. Contacta con Soporte.
+if defined git_missing (
+    echo ########Instalando GIT...
+    choco install -y git
 )
 
-if exist git_output.txt del git_output.txt
+if defined nodejs_missing (
+    echo ########Instalando Node.js...
+    choco install -y nodejs
+)
 
+if defined python_pip_missing (
+    echo ########Instalando Python...
+    choco install -y python312 --override --install-arguments '/quiet InstallAllUsers=1 PrependPath=1 TargetDir=C:\Python3'
+)
+
+echo ########Descargando Bot...
+powershell -NoProfile -ExecutionPolicy Bypass -Command "git clone 'https://github.com/BrunoSobrino/TheMystic-Bot-MD.git' '%USERPROFILE%\mystic\'"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "cd '%USERPROFILE%\mystic' ; npm install"
+
+:ejecutar
+cd "%USERPROFILE%\mystic\"
+echo ########Actualizando
+git pull >nul 2>nul
+echo ########Iniciando
+npm start qr
 pause
-exit /b
