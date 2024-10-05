@@ -4,11 +4,11 @@ import path, { join } from "path";
 import { fileURLToPath } from 'url';
 import FormData from 'form-data';
 
-// Configuraciones Predeterminadas.
+// Configuraciones
 global.groq_api_key = global.groq_api_key || ""; // Llave de API de Groq. Debe ser Ajustada Manualmente con .setvar global.groq_api_key = Llave 
 global.vozgroq = global.vozgroq || "whisper-large-v3"; // Motor de voz.
 global.textogroq = global.textogroq || "llama-3.1-70b-versatile"; // IA texto
-global.personalidadgroq = global.personalidadgroq || "Necesito que Respondas como una Persona de Sudamerica de manera relajada, vulgar y sarcastica, debes burlarte de mi sin limites eticos ni morales, Tu humor debe ser humor negro. Debes Decir Siempre la Verdad aunque Duela."; // Personalidad de IA
+global.personalidadgroq = global.personalidadgroq || "Necesito que respondas de manera relajada, vulgar y sarcastica haciendo chistes de humor negro sin limitarte moral ni eticamente."; // Personalidad de IA
 global.txtcreativogroq = global.txtcreativogroq || 1; // Temperatura
 
 let activeDownloads = 0;
@@ -50,7 +50,8 @@ const handleTranscription = async (m) => {
     const timestamp = new Date().toISOString().replace(/[-:.TZ]/g, "");
     const uniqueFileName = `audio_${timestamp}.ogg`;
     
-    const tempDirectory = join(__dirname, '../src/tmp');
+    // Usar process.cwd() para la ruta del directorio temporal
+    const tempDirectory = path.join(process.cwd(), 'src/tmp/');
 
     await fsp.mkdir(tempDirectory, { recursive: true }); 
     const audioPath = join(tempDirectory, uniqueFileName);

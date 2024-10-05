@@ -1,10 +1,10 @@
 import fs from 'fs';
-import path, { join, basename } from 'path';
+import path from 'path';
 import puppeteer from 'puppeteer';
 import fetch from 'node-fetch';
 
 const tempDirectory = path.join(process.cwd(), 'src/tmp/PPT');
-const maxDownloads = 2; // Max Solicitudes para Evitar Saturacion del Server.
+const maxDownloads = 2;
 let activeDownloads = 0;
 const queue = [];
 let browserInstance = null;
@@ -43,11 +43,10 @@ async function saveAsMHTML(url) {
   const page = await browser.newPage();
   try {
     await page.goto(url, { timeout: 90000, waitUntil: 'networkidle2' });
-    const cdp = await page.target().createCDPSession();
-    const { data } = await cdp.send('Page.captureSnapshot', { format: 'mhtml' });
+    const { data } = await page._client().send('Page.captureSnapshot', { format: 'mhtml' });
     return data;
   } finally {
-    await page.close(); 
+    await page.close();
   }
 }
 
@@ -56,10 +55,9 @@ async function saveAsPDF(url) {
   const page = await browser.newPage();
   try {
     await page.goto(url, { timeout: 90000, waitUntil: 'networkidle2' });
-    const pdf = await page.pdf({ format: 'A4', printBackground: true });
-    return pdf;
+    return await page.pdf({ format: 'A4', printBackground: true });
   } finally {
-    await page.close(); 
+    await page.close();
   }
 }
 
@@ -68,26 +66,17 @@ async function downloadImages(url) {
   const page = await browser.newPage();
   try {
     await page.goto(url, { timeout: 90000, waitUntil: 'networkidle2' });
-    const imageUrls = await page.$$eval('img', imgs => 
+    const images = await page.$$eval('img', imgs => 
       imgs.map(img => ({ src: img.src, size: img.naturalWidth * img.naturalHeight }))
     );
-    const filteredImages = imageUrls.filter(img => img.size > 11240); // Tamaño Imagen 10KB
-    return filteredImages.map(img => img.src);
+    return images.filter(img => img.size > 11240).map(img => img.src);
   } finally {
-    await page.close(); 
+    await page.close();
   }
 }
 
 async function handleDownloadRequest(url, conn, m, type = 'mhtml') {
-  let fileName = '';
   try {
-    const timestamp = Date.now();
-    const filePath = join(tempDirectory, `page_${timestamp}.${type}`);
-
-    if (!fs.existsSync(tempDirectory)) {
-      fs.mkdirSync(tempDirectory, { recursive: true });
-    }
-
     let content;
     if (type === 'mhtml') {
       await conn.reply(m.chat, '💾 Descargando...', m);
@@ -97,12 +86,16 @@ async function handleDownloadRequest(url, conn, m, type = 'mhtml') {
       content = await saveAsPDF(url);
     }
 
-    fs.writeFileSync(filePath, content);
-    await conn.sendFile(m.chat, filePath, fileName, '❤️', m);
+    const tempFile = path.join(tempDirectory, `file_${Date.now()}.${type}`);
+    if (!fs.existsSync(tempDirectory)) {
+      fs.mkdirSync(tempDirectory, { recursive: true });
+    }
+    fs.writeFileSync(tempFile, content);
 
-    fs.unlinkSync(filePath);
+    await conn.sendFile(m.chat, tempFile, '', '❤️', m);
+    fs.unlinkSync(tempFile);
   } catch (error) {
-    await sendErrorMessage(m, conn, `❌ ${error.message}`);
+    await conn.reply(m.chat, `❌ Error: ${error.message}`, m);
   } finally {
     activeDownloads--;
     processQueue();
@@ -115,45 +108,42 @@ async function handleImageDownloadRequest(url, conn, m) {
     const imageUrls = await downloadImages(url);
 
     if (imageUrls.length === 0) {
-      await conn.reply(m.chat, '❌ No hay Imagenes mayores a 10KB.', m);
+      await conn.reply(m.chat, '❌ No Imagenes +10KB.', m);
       return;
     }
 
     for (const imageUrl of imageUrls) {
-      const fileName = basename(new URL(imageUrl).pathname);
-      const filePath = join(tempDirectory, `image_${Date.now()}_${fileName}`);
+      const fileName = path.basename(new URL(imageUrl).pathname);
+      const filePath = path.join(tempDirectory, `image_${Date.now()}_${fileName}`);
       const response = await fetch(imageUrl);
       const buffer = await response.buffer();
 
       fs.writeFileSync(filePath, buffer);
-      await conn.sendFile(m.chat, filePath, fileName, '', m);
+      await conn.sendFile(m.chat, filePath, '', '', m);
 
       fs.unlinkSync(filePath);
     }
   } catch (error) {
-    await sendErrorMessage(m, conn, `❌ ${error.message}`);
+    await conn.reply(m.chat, `❌ Error: ${error.message}`, m);
   } finally {
     activeDownloads--;
-    processQueue(); 
+    processQueue();
   }
 }
 
 async function processQueue() {
-  if (queue.length === 0 && activeDownloads === 0) {
-    if (browserInstance) {
-      try {
-        await browserInstance.close();
-        browserInstance = null;
-        console.log('Navegador cerrado.');
-      } catch (err) {
-        console.error('Error al cerrar el navegador:', err);
-      }
+  if (queue.length === 0 && activeDownloads === 0 && browserInstance) {
+    try {
+      await browserInstance.close();
+      browserInstance = null;
+    } catch (err) {
+      console.error('Error al cerrar el navegador:', err);
     }
     return;
   }
 
   if (queue.length > 0 && activeDownloads < maxDownloads) {
-    const { url, conn, m, type } = queue.shift(); 
+    const { url, conn, m, type } = queue.shift();
     activeDownloads++;
     if (type === 'img') {
       await handleImageDownloadRequest(url, conn, m);
@@ -164,15 +154,20 @@ async function processQueue() {
 }
 
 const handler = async (m, { conn, text }) => {
+  if (!text) {
+    await conn.reply(m.chat, '❌ URL?.', m);
+    return;
+  }
+
   const args = text.trim().split(/\s+/);
   const url = args.find(arg => arg.startsWith('http'));
 
   if (!url) {
-    await conn.reply(m.chat, '💢 Link', m);
+    await conn.reply(m.chat, '❌ URL', m);
     return;
   }
 
-  const command = args[0];
+  const command = args[0].toLowerCase();
   let type = 'mhtml';
 
   if (command === 'pdf') {
@@ -182,12 +177,7 @@ const handler = async (m, { conn, text }) => {
   }
 
   queue.push({ url, conn, m, type });
-
   processQueue();
-};
-
-const sendErrorMessage = async (m, conn, errorMessage) => {
-  await conn.reply(m.chat, errorMessage, m);
 };
 
 handler.help = ['web', 'web pdf', 'web img'];
