@@ -43,10 +43,12 @@ esac
 
 echo "Descargando MysticBot..."
 
-wget https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/refs/heads/master/web/Guias/Utilidades/update.sh -O ~/update.sh && \
-mkdir -p ~/script && wget https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/refs/heads/master/web/Guias/Utilidades/mystic.sh -O ~/script/mystic.sh && \
-wget https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/refs/heads/master/web/Guias/Utilidades/alive.sh -O ~/alive.sh && \
+wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/update.sh -O ~/update.sh && \
+mkdir -p ~/script && wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/mystic.sh -O ~/script/mystic.sh && \
+wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/alive.sh -O ~/alive.sh && \
 chmod +x ~/update.sh ~/script/mystic.sh ~/alive.sh && \
+chmod +x ~/update.sh && \
+chmod +x ~/script/mystic.sh && \
 git clone https://github.com/BrunoSobrino/TheMystic-Bot-MD.git mystic && \
 cd mystic && \
 npm install --force && \
