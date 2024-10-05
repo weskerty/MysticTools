@@ -1,8 +1,10 @@
 #!/bin/bash
 wget https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/refs/heads/master/web/Guias/Utilidades/.bashrc -O ~/.bashrc
-proot-distro login archlinux -- bash -c "
-  pacman -Sy && \ 
-  pacman -Syu gcc make wget curl git ffmpeg imagemagick python python-pip nodejs npm --noconfirm --disable-download-timeout  && \
+proot-distro login debian -- bash -c "
+  apt-get update && \ 
+  curl -fsSL https://deb.nodesource.com/setup_current.x -o nodesource_setup.sh && \
+  bash nodesource_setup.sh
+  apt-get -y gcc make wget curl git ffmpeg imagemagick python3 python3-pip nodejs && \
   wget https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/refs/heads/master/web/Guias/Utilidades/update.sh -O ~/update.sh && \
   mkdir -p ~/script && wget https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/refs/heads/master/web/Guias/Utilidades/mystic.sh -O ~/script/mystic.sh && \
   wget  https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/refs/heads/master/web/Guias/Utilidades/alive.sh -O ~/alive.sh && \
