@@ -1,11 +1,11 @@
-import fs from "fs/promises";
-import path, { join, basename } from "path"; 
+import fs from "fs";
+import path, { join, basename } from "path";
 import { exec } from "child_process";
 
 const __dirname = path.resolve();
 const ytDlpTempDirectory = path.join(process.cwd(), 'src/tmp/YTDLP');
 const curlTempDirectory = path.join(process.cwd(), 'src/tmp/CURL');
-const maxDownloads = 5; // Instancias Permitidas 
+const maxDownloads = 5; // Instancias Permitidas
 let activeDownloads = 0;
 const queue = [];
 
@@ -16,7 +16,7 @@ const processQueue = () => {
   if (activeDownloads >= maxDownloads) {
     
     const { m } = queue[0]; 
-    m.reply(`Tu descarga Tardara ya que solo se Permiten ${maxDownloads} Solicitudes Simultaneas. Puedes Cambiar este Valor para Permitir más Instancias.`);
+    m.reply(`Hay ${maxDownloads} Descargas Activas, tu Archivo Tardara un Rato.`);
     return;
   }
 
@@ -36,11 +36,10 @@ const processQueue = () => {
 
 let handler = (m) => {
   return new Promise((resolve, reject) => {
-    queue.push({ m, resolve, reject }); 
-    processQueue(); 
+    queue.push({ m, resolve, reject });
+    processQueue();
   });
 };
-
 
 const handleRequest = async (m) => {
   const command = cleanCommand(m.text.trim());
@@ -99,8 +98,9 @@ const downloadWithCurl = async (m, url, options) => {
     await prepareDirectory(curlTempDirectory);
     await m.reply(`⏳ Descargando con CURL...`);
     await execPromise(`curl --max-filesize 1500000000 ${options} -o "${outputFilePath}" "${url}"`);
-    await fs.access(outputFilePath);
-    await sendDownloadedFile(m, outputFilePath);
+    fs.access(outputFilePath, fs.constants.F_OK, (err) => {
+      if (!err) sendDownloadedFile(m, outputFilePath);
+    });
   } catch (error) {
     await sendErrorMessage(m, error, `curl ${options} -o "${outputFilePath}" "${url}"`);
   } finally {
@@ -133,50 +133,50 @@ const execPromise = (command) => {
   });
 };
 
-const prepareDirectory = async (dir) => {
-  await fs.mkdir(dir, { recursive: true });
-};
-
-const findDownloadedFiles = async (filePathPrefix, directory) => {
-  const files = await fs.readdir(directory);
-  return files.filter(file => file.startsWith(path.basename(filePathPrefix)));
-};
-
-const sendDownloadedFile = async (m, filePath) => {
-  try {
-    await fs.stat(filePath);
-    await conn.sendMessage(m.chat, {
-      document: { url: filePath },
-      mimetype: 'application/octet-stream',
-      fileName: path.basename(filePath)
-    }, { quoted: m });
-  } finally {
-    await fs.unlink(filePath);
+const prepareDirectory = (dir) => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
   }
 };
 
-const cleanupFiles = async (directory, filePathPrefix) => {
-  try {
-    const files = await fs.readdir(directory);
-    for (const file of files) {
-      if (file.startsWith(path.basename(filePathPrefix))) {
-        await fs.unlink(join(directory, file));
-      }
-    }
-  } catch (error) {
-    console.error("Error al limpiar los archivos:", error);
-  }
-};
-
-const sendErrorMessage = async (m, error, command) => {
-  await m.reply(`❌ \n${error.message || error}\n\nComando ejecutado:\n${command}`);
-};
-
-let handler = (m) => {
+const findDownloadedFiles = (filePathPrefix, directory) => {
   return new Promise((resolve, reject) => {
-    queue.push({ m, resolve, reject });
-    if (activeDownloads < maxDownloads) processQueue();
+    fs.readdir(directory, (err, files) => {
+      if (err) reject(err);
+      resolve(files.filter(file => file.startsWith(path.basename(filePathPrefix))));
+    });
   });
+};
+
+const sendDownloadedFile = (m, filePath) => {
+  fs.stat(filePath, (err, stats) => {
+    if (!err) {
+      conn.sendMessage(m.chat, {
+        document: { url: filePath },
+        mimetype: 'application/octet-stream',
+        fileName: path.basename(filePath)
+      }, { quoted: m }, () => {
+        fs.unlink(filePath, (err) => { if (err) console.error(err); });
+      });
+    }
+  });
+};
+
+const cleanupFiles = (directory, filePathPrefix) => {
+  fs.readdir(directory, (err, files) => {
+    if (err) return console.error("Error al limpiar los archivos:", err);
+    files.forEach(file => {
+      if (file.startsWith(path.basename(filePathPrefix))) {
+        fs.unlink(join(directory, file), (err) => {
+          if (err) console.error("Error al eliminar el archivo:", err);
+        });
+      }
+    });
+  });
+};
+
+const sendErrorMessage = (m, error, command) => {
+  m.reply(`❌ \n${error.message || error}\n\nComando ejecutado:\n${command}`);
 };
 
 handler.help = ['dla [OPTIONS] URL', 'dla update', 'dla curl [OPTIONS] URL'];
