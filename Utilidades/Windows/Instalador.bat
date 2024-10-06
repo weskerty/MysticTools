@@ -43,7 +43,7 @@ if defined python_pip_missing (
 )
 
 echo ########Descargando Bot...
-powershell -NoProfile -ExecutionPolicy Bypass -Command "git clone 'https://github.com/BrunoSobrino/TheMystic-Bot-MD.git' '%USERPROFILE%\mystic\'"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "git clone 'https://github.com/weskerty/TheMysticMOD.git' '%USERPROFILE%\mystic\'"
 powershell -NoProfile -ExecutionPolicy Bypass -Command "cd '%USERPROFILE%\mystic' ; npm install"
 
 :ejecutar
