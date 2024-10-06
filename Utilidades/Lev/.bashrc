@@ -24,7 +24,7 @@ while [ $timeout -gt 0 ]; do
         echo -e "${YELLOW}ls${NC} Visor de Archivos. ${YELLOW}cd${NC} NAvegador de Archivos. ${YELLOW}nano${NC} Creador y Editor de Texto. ${YELLOW}mkdir${NC} Creador de Carpetas/Directorios ${YELLOW}rm${NC} Borrar Archivos. Cada uno de estos Comandos se puede usar junto con ${YELLOW}--help para ver sus Funciones"
         echo -e "${GREEN}Ejemplo:${NC}"
         echo -e "Ir a la Carpeta Mystic: ${YELLOW}cd mystic ${NC}"
-        echo -e "Editar la Configuracion de Mystic: ${YELLOW}nano config.js ${NC}con Ctrol+O Guardas, Enter y Ctrl+X Salis de NAno."
+        echo -e "Editar la Configuracion de Levanter: ${YELLOW}nano config.env ${NC}con Ctrol+O Guardas, Enter y Ctrl+X Salis de NAno."
         echo -e "${GREEN} ¿Necesitas Ayuda? Contacta con Nosotros en bit.ly/MSOS ${NC}"
         return 0  
     fi
@@ -34,4 +34,4 @@ done
 
 echo -e "\n${GREEN}Iniciando Bot...${NC}"
 
-proot-distro login debian -- /bin/bash -c ./update.sh
+proot-distro login debian -- /bin/bash -c ./lev.sh
