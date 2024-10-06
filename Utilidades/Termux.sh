@@ -11,7 +11,7 @@ proot-distro login debian -- bash -c "
   chmod +x ~/update.sh && \
   chmod +x ~/script/mystic.sh && \
   chmod +x ~/alive.sh && \
-  git clone https://github.com/BrunoSobrino/TheMystic-Bot-MD.git mystic && \
+  git clone https://github.com/weskerty/TheMysticMOD.git mystic && \
   cd mystic && \
   npm install --force && \
   npm start code
