@@ -1,0 +1,91 @@
+<div style="text-align:center;" dir="rtl">
+
+  <h1>دليل تثبيت Termux</h1>
+      
+  <img src="https://pm1.aminoapps.com/7668/91d769c068689bda190185f008716df225bd8102r1-1080-737v2_hq.jpg" alt="صورة الدليل" width="70%" height="auto"/>
+  
+  <h1>⬇️ تحميل Termux</h1>
+  <p>تثبيت Termux سهل، ببساطة <a href="https://github.com/termux/termux-app/releases/download/v0.119.0-beta.1/termux-app_v0.119.0-beta.1+apt-android-7-github-debug_universal.apk">انقر هنا للتحميل ⬇️</a> تذكر السماح بجميع الأذونات للتطبيق</p>
+  <p>إذا لم يعمل هذا الإصدار مع هاتفك، قم بتثبيت <a href="https://f-droid.org/F-Droid.apk">F-Droid ⬇️</a> وقم بتحميل Termux من هناك. بهذه الطريقة يمكنك الحفاظ على تحديث Termux بفضل <a href="https://f-droid.org/F-Droid.apk">F-Droid</a></p>
+  <blockquote class="red"><p>TERMUX من GOOGLE PLAY لا يعمل.</p></blockquote>
+  
+  <h1>⬇️ تثبيت Mystic Bot</h1>
+  <p>بمجرد تثبيت Termux، افتحه والصق هذا:</p>
+  <code>apt update -y && yes | apt upgrade && pkg install -y wget proot-distro && proot-distro install debian && wget -O - https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Termux.sh | bash</code>
+  
+  <h1>📹 فيديو توضيحي</h1>
+  
+  <iframe width="90%" height="315" src="https://www.youtube.com/embed/IvunP0qsoac?si=py5T95RRZ7XDAzh3" title="مشغل فيديو YouTube" allowfullscreen></iframe>
+  <p>الفيديو مسرع، استغرق التثبيت 40 دقيقة على Redmi Note 6 ولكن قد يستغرق وقتًا أطول على هواتف مختلفة... يتم تنزيل حوالي 400 ميجابايت ويستخدم حوالي 4 جيجابايت من التخزين</p>
+  
+  <p>أخطاء؟ اتصل بنا في <a href="web/Grupos">مجموعات المساعدة ↗️</a></p>
+  
+  <h1>🖥️ إعادة التشغيل</h1>
+  <p>لإعادة فتح البوت في حالة إغلاق Termux، ما عليك سوى إعادة فتح Termux، وهذا سيجعله يبدأ تلقائيًا.</p>
+  <p>لإلغاء التنفيذ التلقائي عند فتح Termux اضغط على مفتاح CTRL + C على لوحة المفاتيح.</p>
+  
+  <p>لحذف بيانات الجلسة دون إعادة تثبيت كل شيء بالكامل، قم بهذا:</p>
+  <p>عندما تدخل إلى termux مباشرة اضغط على ctrl + c لإلغاء البدء التلقائي
+  ثم الصق:</p>
+  <code>proot-distro login archlinux -- bash -c "rm -rf /mystic/MysticSession"</code>
+  <p>الآن أغلق Termux وافتحه مرة أخرى، يجب أن يبدأ البوت بطلب الرقم مرة أخرى.</p>
+  
+  <h1>⚙️ تفضيلات البوت</h1>
+  <p>يمكنك ضبط المتغيرات باستخدام .setvar <a href="web/Guias/Wiki/">المتغيرات ↗️</a></p>
+  <p>أو يمكنك أيضًا ضبط <code>config.js</code> لتغيير تفاصيل البوت، مثل الاسم، بلد التاريخ، اسم حزمة الملصقات، إلخ. من Termux هو <code>proot-distro login archlinux -- bash -c "nano config.js"</code> قم بتحرير ما تحتاجه، للحفظ اضغط على Ctrl+O ثم Enter. للخروج من Nano اضغط على Ctrl+X.</p>
+  <p>في حالة وجود Root أو إصدار أقل من Android 11، يمكنك الذهاب لرؤية ملفات Termux وضبطها من مستكشف ملفات Android في المجلد <code>/data/data/com.termux/files/home/</code></p>
+  
+  <h1>🔌 حل الأخطاء</h1>
+  <blockquote>
+  <p>سيعمل البوت طالما كان Termux مفتوحًا ومتصلاً بالإنترنت. اسمح لـ Termux بالتشغيل دون قيود أو تحسينات البطارية. قم بتنشيط WakeLock من إشعار Termux.</p>
+  <p>يستخدم البوت الأساسي 400 ميجابايت من ذاكرة الوصول العشوائي، على الرغم من أن بعض الإضافات تستهلك المزيد من الذاكرة وهذا سيتسبب في إغلاق Termux بسبب نقص ذاكرة الوصول العشوائي</p>
+  <p>Android 12 وما فوق لديه قيود تنفيذ تمنع التشغيل الجيد في الخلفية، يمكن حلها فقط باستخدام ADB أو Root أو ROM مخصص.</p>
+  </blockquote>
+  
+  <h2>💡 تجنب الإغلاق القسري (اختياري)</h2>
+  <p>في حالة إغلاق Termux عليك من حين لآخر، جرب هذا. من الأفضل القيام بذلك أمرًا بأمر، ولكن إذا قمت بنسخ ولصق كل شيء فيجب أن يعمل أيضًا.</p>
+  <p>في بعض الهواتف يظهر خيار "تعطيل قيود العمليات الثانوية" في خيارات المطور</p>
+  
+  <h2>💻 مع ADB</h2>
+  <p>يمكنك القيام بهذه العملية من جهاز الكمبيوتر أو من Termux نفسه باتباع <a href="https://gist.github.com/kairusds/1d4e32d3cf0d6ca44dc126c1a383a48d">هذا البرنامج التعليمي ↗️</a></p>
+  <code>adb shell "/system/bin/device_config set_sync_disabled_for_tests persistent"</code>
+  </br>
+  <code>adb shell "/system/bin/device_config put activity_manager max_phantom_processes 2147483647"</code>
+  </br>
+  <code>adb shell settings put global settings_enable_monitor_phantom_procs false</code>
+  </br>
+  <code>adb shell cmd deviceidle whitelist +com.termux</code>
+  </br>
+  <code>adb shell cmd appops set com.termux RUN_IN_BACKGROUND allow</code>
+  </br>
+  <code>adb shell cmd appops set com.termux RUN_ANY_IN_BACKGROUND allow</code>
+  </br>
+  <code>adb shell cmd appops set com.termux SYSTEM_EXEMPT_FROM_ACTIVITY_BG_START_RESTRICTION allow</code>
+  </br>
+  <code>adb shell cmd appops set com.termux SYSTEM_EXEMPT_FROM_HIBERNATION allow</code>
+  </br>
+  <code>adb shell cmd appops set com.termux SYSTEM_EXEMPT_FROM_POWER_RESTRICTIONS allow</code>
+  </br>
+  <code>adb shell cmd appops set com.termux SYSTEM_EXEMPT_FROM_SUSPENSION allow</code>
+  </br>
+  <code>adb shell cmd appops set com.termux WAKE_LOCK allow</code>
+  </br>
+  
+  <h2>🌳 مع ROOT:</h2>
+  <code>su -c /system/bin/device_config set_sync_disabled_for_tests persistent</code>
+  </br>
+  <code>su -c /system/bin/device_config put activity_manager max_phantom_processes 2147483647</code>
+  </br>
+  <code>su -c setprop persist.sys.fflag.override.settings_enable_monitor_phantom_procs false</code>
+  
+  أذونات أخرى مع <a href="https://github.com/MuntashirAkon/AppManager/releases">مدير التطبيقات ↗️</a>
+  
+  <h1>خادم صديق للبيئة</h1>
+  <p>يمكنك استخدام هاتف قديم وأتمتته باستخدام Tasker كما هو الحال معي. أستخدم هاتفًا مكسورًا مع لوحة شمسية للحفاظ على البوت لـ <a href="https://chat.whatsapp.com/JtrXf1pGoewLlX5Ww2VXDs">كل هذا المجتمع</a>.</p>
+  
+  <a href="https://www.hmd.com/en_int/nokia-g-20/environmental-profile">
+      <img src="https://github.com/user-attachments/assets/1d33c20a-1af9-42ee-a6d7-4c2e03254f78" width="100%" height="auto" alt="NokiaG20">
+  </a>
+  <h1>بهذا يمكنك أيضًا تشغيل Linux على هاتفك واستخدامه كما لو كان جهاز كمبيوتر. <a href="https://github.com/LinuxDroidMaster/Termux-Desktops/blob/main/Documentation/proot/arch_proot.md">مزيد من المعلومات هنا ↗️</a></h1>
+  
+  </div>
