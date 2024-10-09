@@ -1,61 +1,91 @@
-<h1>Termux Installation Guide</h1>
+<div style="text-align:center;">
 
-<img src="https://pm1.aminoapps.com/7668/91d769c068689bda190185f008716df225bd8102r1-1080-737v2_hq.jpg" alt="Guide Image" width="70%" height="auto"/>
-
-<h2>⬇️ Download Termux</h2>
-<p> Install Termux <a href="https://github.com/termux/termux-app/releases/download/v0.119.0-beta.1/termux-app_v0.119.0-beta.1+apt-android-7-github-debug_universal.apk">Click Here to Download Termux ⬇️</a> Remember to grant all permissions to Termux. </p>
-<p>If that version doesn't work with your phone, you should Search for the Compatible Version on <a href="https://github.com/termux/termux-app/releases">Termux Github ↗️</a> or Download <a href="https://f-droid.org/F-Droid.apk">F-Droid ⬇️</a> and Download Termux from There</p>
-<blockquote><p> THE TERMUX FROM GOOGLE PLAY DOES NOT WORK. </p></blockquote>
-
-<h2>⬇️ Install Mystic Bot</h2>
-<p>Simply copy and paste this into Termux</p>
-<code> apt update -y && yes | apt upgrade && pkg install -y wget proot-distro && proot-distro install archlinux && wget -O - https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/refs/heads/master/web/Guias/Utilidades/Termux.sh | bash </code>
-
-<h1>📹 Demonstrative Video: </h1>
-<video src="https://github.com/user-attachments/assets/a109c5ef-1124-437c-b616-5dc2ca7bdec8" controls width="100%" height="auto"></video>
-
-<p>If you get the error "Arch already installed" you can delete Termux data and start over. Do not minimize to avoid crashes.</p>
-<p>You can also simply run this to skip that error</p>
-<code> apt update -y && yes | apt upgrade && pkg install -y wget proot-distro && wget -O - https://raw.githubusercontent.com/weskerty/test/main/Termux/mystic.sh | bash </code>
-
-<h2>🖥️ Restart</h2>
-<p> To reopen the bot if Termux closes, just open Termux again, this will make it start automatically. </p>
-<p>To cancel automatic execution when opening Termux, press the CTRL + C key on the keyboard.</p>
-
-<p>To Delete Session Data Without Reinstalling Everything Completely Do This:</p>
-<p>When you first enter termux press ctrl c to cancel the autostart
-Then paste:</p>
-<code>proot-distro login archlinux -- bash -c "rm -rf /mystic/MysticSession"</code>
-<p>Now Close Termux and Open It Again, It Should Start the Bot Asking for the Number Again.</p>
-
-<h2>⚙️ Bot Preferences</h2>
-<p>You can adjust the <code>config.js</code> to change bot details such as name, date country, sticker pack name, etc. From Termux it's <code> proot-distro login archlinux -- bash -c "nano config.js" </code>. Edit what you need, to save use Ctrl+O then Enter. To exit Nano, use Ctrl+X.</p>
-<p>If you have Root or a version lower than Android 11, you can view Termux files and adjust them from the Android file explorer in the folder <code>/data/data/com.termux/files/home/</code>.</p>
-
-<h2>🔌 Keep Termux Open</h2>
-<blockquote> <p>The bot will work as long as Termux is open and connected to the Internet. Allow Termux to run without battery optimizations. Activate WakeLock from the Termux notification.</p>
-
-<p> Android 12 and above have execution limitations that prevent proper background functionality. This can only be resolved with ADB, Root, or Custom ROM.<p>
-</blockquote>
-
-<h2>💡 Prevent Forced Closing (Optional)</h2>
-<p>If Termux closes frequently, you can follow these optional steps:</p>
-
-<h3>With ADB</h3>
-<code>adb shell "/system/bin/device_config set_sync_disabled_for_tests persistent"</code>
-<code>adb shell "/system/bin/device_config put activity_manager max_phantom_processes 2147483647"</code>
-<code>adb shell settings put global settings_enable_monitor_phantom_procs false</code>
-
-<h3>With ROOT:</h3>
-<code>su -c /system/bin/device_config set_sync_disabled_for_tests persistent</code>
-<code>su -c /system/bin/device_config put activity_manager max_phantom_processes 2147483647</code>
-<code>su -c setprop persist.sys.fflag.override.settings_enable_monitor_phantom_procs false</code>
-
-<h2>Eco-Friendly Server</h2>
-<p>You can use an old phone and automate it with Tasker as I do. I use a broken phone with a solar panel to keep the bot running for <a href="https://chat.whatsapp.com/JtrXf1pGoewLlX5Ww2VXDs">This Entire Community</a>.</p>
-
-<a href="https://www.hmd.com/en_int/nokia-g-20/environmental-profile">
-<img src="https://github.com/user-attachments/assets/1d33c20a-1af9-42ee-a6d7-4c2e03254f78" width="100%" height="auto" alt="NokiaG20">
-</a>
-
-<h1> With this, you can also run Linux on your phone and use it like a PC. <a href="https://github.com/LinuxDroidMaster/Termux-Desktops/blob/main/Documentation/proot/arch_proot.md">More Info Here</a>  </h1>
+    <h1>Guia de Instalação do Termux</h1>
+        
+    <img src="https://pm1.aminoapps.com/7668/91d769c068689bda190185f008716df225bd8102r1-1080-737v2_hq.jpg" alt="Imagem do guia" width="70%" height="auto"/>
+    
+    <h1>⬇️ Baixar Termux</h1>
+    <p>Instalar o Termux é fácil, simplesmente <a href="https://github.com/termux/termux-app/releases/download/v0.119.0-beta.1/termux-app_v0.119.0-beta.1+apt-android-7-github-debug_universal.apk">Clique Aqui para Baixar ⬇️</a> Lembre-se de Permitir Todas as Permissões para o App</p>
+    <p>Se essa versão não funcionar com seu telefone, Instale o <a href="https://f-droid.org/F-Droid.apk">F-Droid ⬇️</a> e Baixe o Termux de Lá. Desta forma você pode Manter o Termux Atualizado Graças ao <a href="https://f-droid.org/F-Droid.apk">F-Droid</a></p>
+    <blockquote class="red"><p>O TERMUX DA GOOGLE PLAY NÃO FUNCIONA.</p></blockquote>
+    
+    <h1>⬇️ Instalar Mystic Bot</h1>
+    <p>Uma vez que o Termux esteja Instalado, Abra-o e cole isto:</p>
+    <code>apt update -y && yes | apt upgrade && pkg install -y wget proot-distro && proot-distro install debian && wget -O - https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Termux.sh | bash</code>
+    
+    <h1>📹 Vídeo de Demonstração</h1>
+    
+    <iframe width="90%" height="315" src="https://www.youtube.com/embed/IvunP0qsoac?si=py5T95RRZ7XDAzh3" title="Player de vídeo do YouTube" allowfullscreen></iframe>
+    <p>O Vídeo está Acelerado, a Instalação Levou 40m em um Redmi Note 6 mas pode levar mais tempo em diferentes Telefones... Ele Baixa Cerca de 400MB e usa Cerca de 4GB de Armazenamento</p>
+    
+    <p>Erros? Entre em Contato Conosco nos <a href="web/Grupos">Grupos de Ajuda ↗️</a></p>
+    
+    <h1>🖥️ Iniciar Novamente</h1>
+    <p>Para abrir o bot novamente caso o Termux feche, Basta abrir o Termux novamente, isso fará com que ele Inicie Automaticamente.</p>
+    <p>Para cancelar a execução automática ao abrir o Termux Pressione a tecla CTRL + C do Teclado.</p>
+    
+    <p>Para Excluir Dados da Sessão sem Reinstalar Tudo completamente Faça Isto:</p>
+    <p>Quando você acabar de entrar no termux pressione ctrl + c para cancelar o início automático
+    Então cole:</p>
+    <code>proot-distro login archlinux -- bash -c "rm -rf /mystic/MysticSession"</code>
+    <p>Agora Feche o Termux e Abra-o Novamente, Ele Deve Iniciar o Bot Solicitando o Número Novamente.</p>
+    
+    <h1>⚙️ Preferências do Bot</h1>
+    <p>Você pode ajustar as variáveis com .setvar <a href="web/Guias/Wiki/">Variáveis ↗️</a></p>
+    <p>Ou Você Também pode ajustar o <code>config.js</code> para alterar detalhes do bot, como nome, país da data, nome do pacote de adesivos, etc. Do Termux é <code>proot-distro login archlinux -- bash -c "nano config.js"</code> Edite o que você precisa, para salvar é Ctrl+O e depois Enter. Para sair do Nano é Ctrl+X.</p>
+    <p>Caso você tenha Root ou uma versão inferior ao Android 11, você pode ir ver os arquivos do Termux e ajustá-los a partir do explorador de arquivos do Android na pasta <code>/data/data/com.termux/files/home/</code></p>
+    
+    <h1>🔌 Solução de Erros</h1>
+    <blockquote>
+    <p>O bot funcionará enquanto o Termux estiver aberto e com conexão à Internet. Permita que o Termux seja executado sem restrições ou otimizações de bateria. Ative o WakeLock a partir da notificação do Termux.</p>
+    <p>O bot Base usa 400MB de RAM, Embora alguns plugins consumam mais memória e isso fará com que o Termux feche por falta de RAM</p>
+    <p>Android 12 e superior têm limitações de execução que impedem o bom funcionamento em segundo plano, só pode ser resolvido com ADB, Root ou ROM personalizada.</p>
+    </blockquote>
+    
+    <h2>💡 Evitar Fechamento Forçado (Opcional)</h2>
+    <p>Caso o Termux feche para você de vez em quando, Tente isto. É melhor fazê-lo Comando por Comando, mas Se Você Copiar e Colar Tudo Também Deve Funcionar.</p>
+    <p>Em alguns Telefones aparece a Opção "Desativar Restrições de Processos Secundários" nas Opções de Desenvolvedor</p>
+    
+    <h2>💻 Com ADB</h2>
+    <p>Você Pode Fazer Este Processo Do PC ou Do Próprio Termux Seguindo <a href="https://gist.github.com/kairusds/1d4e32d3cf0d6ca44dc126c1a383a48d">Este Tutorial ↗️</a></p>
+    <code>adb shell "/system/bin/device_config set_sync_disabled_for_tests persistent"</code>
+    </br>
+    <code>adb shell "/system/bin/device_config put activity_manager max_phantom_processes 2147483647"</code>
+    </br>
+    <code>adb shell settings put global settings_enable_monitor_phantom_procs false</code>
+    </br>
+    <code>adb shell cmd deviceidle whitelist +com.termux</code>
+    </br>
+    <code>adb shell cmd appops set com.termux RUN_IN_BACKGROUND allow</code>
+    </br>
+    <code>adb shell cmd appops set com.termux RUN_ANY_IN_BACKGROUND allow</code>
+    </br>
+    <code>adb shell cmd appops set com.termux SYSTEM_EXEMPT_FROM_ACTIVITY_BG_START_RESTRICTION allow</code>
+    </br>
+    <code>adb shell cmd appops set com.termux SYSTEM_EXEMPT_FROM_HIBERNATION allow</code>
+    </br>
+    <code>adb shell cmd appops set com.termux SYSTEM_EXEMPT_FROM_POWER_RESTRICTIONS allow</code>
+    </br>
+    <code>adb shell cmd appops set com.termux SYSTEM_EXEMPT_FROM_SUSPENSION allow</code>
+    </br>
+    <code>adb shell cmd appops set com.termux WAKE_LOCK allow</code>
+    </br>
+    
+    <h2>🌳 Com ROOT:</h2>
+    <code>su -c /system/bin/device_config set_sync_disabled_for_tests persistent</code>
+    </br>
+    <code>su -c /system/bin/device_config put activity_manager max_phantom_processes 2147483647</code>
+    </br>
+    <code>su -c setprop persist.sys.fflag.override.settings_enable_monitor_phantom_procs false</code>
+    
+    Outras Permissões com <a href="https://github.com/MuntashirAkon/AppManager/releases">App Manager ↗️</a>
+    
+    <h1>Servidor Ecológico</h1>
+    <p>Você pode usar um telefone antigo e automatizá-lo com o Tasker como é o meu caso. Eu uso um telefone quebrado com um painel solar para manter o bot para <a href="https://chat.whatsapp.com/JtrXf1pGoewLlX5Ww2VXDs">Toda esta Comunidade</a>.</p>
+    
+    <a href="https://www.hmd.com/en_int/nokia-g-20/environmental-profile">
+        <img src="https://github.com/user-attachments/assets/1d33c20a-1af9-42ee-a6d7-4c2e03254f78" width="100%" height="auto" alt="NokiaG20">
+    </a>
+    <h1>Com isso Você também pode executar Linux em seu Telefone e Usá-lo como se Fosse um PC. <a href="https://github.com/LinuxDroidMaster/Termux-Desktops/blob/main/Documentation/proot/arch_proot.md">Mais Informações Aqui ↗️</a></h1>
+    
+    </div>
