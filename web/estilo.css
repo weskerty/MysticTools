@@ -74,14 +74,23 @@ code {
 
 .contenedor-imagenes {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 2px;
-    width: "80%"; 
+    justify-content: center;
+    align-items: center;     
+    gap: 5px;                
+    width: 100%;           
 }
 
+.contenedor-imagenes img {
+    max-width: 100%;        
+    height: auto;           
+    margin: 0;
+    padding: 0;
+    display: block;          
+}
+
+
 .contenedor-texto {
-    margin-bottom: 20px; 
+    margin-bottom: 2px; 
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -122,3 +131,5 @@ blockquote.red {
         background-color: rgba(0, 0, 0, 0.7);
     }
 }
+
+
