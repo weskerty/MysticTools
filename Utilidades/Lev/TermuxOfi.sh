@@ -4,7 +4,7 @@ wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Util
 proot-distro login debian -- bash -c "
   apt-get update && \ 
   curl -fsSL http://bit.ly/43JqREw -o levOfi.sh && \
-  bash evOfi.sh
+  bash levOfi.sh
 "
 
 #RUN in TERMUX: apt update -y && yes | apt upgrade && pkg install -y wget && wget -O - https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/TermuxOfi.sh | bash 
