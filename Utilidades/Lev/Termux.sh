@@ -5,11 +5,12 @@ proot-distro login debian -- bash -c "
   apt-get update && \ 
   curl -fsSL https://deb.nodesource.com/setup_lts.x -o nodesource_setup.sh && \
   bash nodesource_setup.sh
-  apt-get install sudo nano gcc make wget curl git ffmpeg nodejs yarn -y && \
+  apt-get install sudo nano gcc make wget curl git ffmpeg nodejs -y && \
   wget  https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/lev.sh -O ~/lev.sh && \
   chmod +x ~/lev.sh && \
   git clone https://github.com/lyfe00011/levanter.git levanter && \
   wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/config.env -O ~/levanter/config.env && \
+  npm install yarn pm2 -g && \
   cd levanter && \
   yarn install && \
   npm start 
