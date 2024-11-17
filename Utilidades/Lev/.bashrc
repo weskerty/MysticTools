@@ -23,9 +23,19 @@ while [ $timeout -gt 0 ]; do
         echo -e "${GREEN}Comandos Utiles:${NC}"
         echo -e "${YELLOW}ls${NC} Visor de Archivos. ${YELLOW}cd${NC} NAvegador de Archivos. ${YELLOW}nano${NC} Creador y Editor de Texto. ${YELLOW}mkdir${NC} Creador de Carpetas/Directorios ${YELLOW}rm${NC} Borrar Archivos. Cada uno de estos Comandos se puede usar junto con ${YELLOW}--help para ver sus Funciones"
         echo -e "${GREEN}Ejemplo:${NC}"
-        echo -e "Ir a la Carpeta Mystic: ${YELLOW}cd mystic ${NC}"
-        echo -e "Editar la Configuracion de Levanter: ${YELLOW}nano config.env ${NC}con Ctrol+O Guardas, Enter y Ctrl+X Salis de NAno."
-        echo -e "${GREEN} ¿Necesitas Ayuda? Contacta con Nosotros en bit.ly/MSOS ${NC}"
+        echo -e "Ir a la Carpeta del bot: ${YELLOW}cd levanter ${NC}"
+        echo -e "Editar la Configuracion de Levanter: ${YELLOW}nano config.env ${NC}con Ctrl+O Guardas, Enter y Ctrl+X Salir de Nano."
+        echo -e "${GREEN} ¿Necesitas Ayuda? Contacta con Nosotros en Telegram @LevanterLyfe ${NC}"
+        echo -e "${RED} English ${NC}"
+        echo -e "\n${RED}Autostart Canceled.${NC}"
+        echo -e "${GREEN}You can use Termux normally.${NC}"
+        echo -e "The bot is in a container, use the command ${YELLOW}proot-distro login debian${NC} to log in."
+        echo -e "${GREEN}Useful Commands:${NC}"
+        echo -e "${YELLOW}ls${NC} File Viewer. ${YELLOW}cd${NC} File Browser. ${YELLOW}nano${NC} Text Creator and Editor. ${YELLOW}mkdir${NC} Folder/Directory Creator ${YELLOW}rm${NC} Delete Files. Each of these commands can be used in conjunction with ${YELLOW}--help to see their Functions"
+        echo -e "${GREEN}Example:${NC}"
+        echo -e "Go to Bot Folder: ${YELLOW}cd levanter ${NC}"
+        echo -e "Editing the Levanter Configuration: ${YELLOW}nano config.env ${NC}with Ctrl+O Save, Enter and Ctrl+X Exit Nano."
+        echo -e "${GREEN} Need Help? Contact Us on Telegram @LevanterLyfe ${NC}"
         return 0  
     fi
     
