@@ -11,7 +11,6 @@ proot-distro login debian -- bash -c "
   git clone https://github.com/lyfe00011/levanter.git levanter && \
   wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/config.env -O ~/levanter/config.env && \
   cd levanter && \
-  nano config.env && \
   yarn install && \
   npm start 
 "
