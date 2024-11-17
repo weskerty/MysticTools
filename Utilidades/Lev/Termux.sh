@@ -1,6 +1,6 @@
 #!/bin/bash
 pkg install -y proot-distro && proot-distro install debian && \
-wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/.bashrc -O ~/.bashrc
+wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/.bashrc -O ~/.bashrc && \
 proot-distro login debian -- bash -c "
   apt-get update && \ 
   curl -fsSL https://deb.nodesource.com/setup_lts.x -o nodesource_setup.sh && \
