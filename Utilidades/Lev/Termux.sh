@@ -9,7 +9,7 @@ proot-distro login debian -- bash -c "
   wget  https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/lev.sh -O ~/lev.sh && \
   chmod +x ~/lev.sh && \
   git clone https://github.com/lyfe00011/levanter.git levanter && \
-  wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/.bashrc -O ~/levanter/config.env && \
+  wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/config.env -O ~/levanter/config.env && \
   cd levanter && \
   nano config.env && \
   yarn install && \
@@ -17,3 +17,9 @@ proot-distro login debian -- bash -c "
 "
 
 #RUN in TERMUX: apt update -y && yes | apt upgrade && pkg install -y wget && wget -O - https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/Termux.sh | bash 
+
+💡 Prevent Force Close (Optional)
+In case Termux keeps closing on you, try this. It's better to do it Command by Command, but Copying and Pasting Everything Should Work Too.
+
+On some phones, the "Disable Child Process Restrictions" option appears in Developer Options
+You can do this process from your PC or from Termux itself by following this tutorial ↗️ 
