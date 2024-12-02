@@ -11,6 +11,12 @@ proot-distro login debian -- bash -c "
   git clone https://github.com/lyfe00011/levanter.git levanter && \
   wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/config.env -O ~/levanter/config.env && \
   
+
+  
+  npm install yarn pm2 -g && \
+  cd levanter && \
+  yarn install && \
+
   # Preguntar por SESSION_ID
   echo -e '\e[36mDo you have a SESSION_ID scanned today? (y/n):\e[0m' && \
   read -r HAS_SESSION_ID && \
@@ -20,8 +26,5 @@ proot-distro login debian -- bash -c "
     echo \"SESSION_ID=\$SESSION_ID\" >> ~/levanter/config.env; \
   fi && \
   
-  npm install yarn pm2 -g && \
-  cd levanter && \
-  yarn install && \
   npm start 
 "
