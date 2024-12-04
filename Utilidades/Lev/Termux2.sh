@@ -1,5 +1,5 @@
 #!/bin/bash
-pkg install -y proot-distro && proot-distro install debian && \
+pkg install -y proot-distro && proot-distro install debian
 curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/.bashrc > ~/.bashrc && \
 proot-distro login debian -- bash -c "
   apt-get update && \ 
