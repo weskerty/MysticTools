@@ -1,5 +1,6 @@
 #!/bin/bash
 proot-distro login debian -- bash -c "
+cd levanter
   # Preguntar por SESSION_ID
   echo -e '\e[36mDo you have a SESSION_ID scanned today? (y/n):\e[0m' && \
   read -r HAS_SESSION_ID && \
