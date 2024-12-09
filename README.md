@@ -1,3 +1,7 @@
+# Instaladores:
+https://github.com/weskerty/MysticTools/releases/
+
+
 # MysticTools
 ## Pagina Web de The Mystic Bot y Demas Herramientas.
 ### Entra a la Pagina Web: https://weskerty.github.io/MysticTools/
