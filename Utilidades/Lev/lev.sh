@@ -1,3 +1,4 @@
 #!/bin/bash
 cd $HOME/levanter
-npm start .
+pm2 start . --name levanter --attach --time
+#npm start .
