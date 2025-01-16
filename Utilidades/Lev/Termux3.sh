@@ -5,7 +5,7 @@ pkg install -y tur-repo x11-repo && \
 # Actualizar Repositorio
 apt-get update && \
 # Instalar Programas Necesarios
-pkg install -y curl nano clang make git ffmpeg nodejs-lts pkg-config && \
+pkg install -y python nano clang make git ffmpeg nodejs-lts pkg-config && \
 # Crear directorios necesarios
 mkdir -p ~/.gyp && \
 mkdir -p ~/android-ndk && \
