@@ -3,25 +3,26 @@
 # Instalar repositorio de Comunidad
 pkg install -y tur-repo x11-repo
 
-# Instalar Programas Necesarios
-pkg install -y wget nano clang make curl git ffmpeg nodejs-lts pkg-config
-
-# Agregar .bashrc para Inicio Automatico al Abrir Termux
-curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/.bashrc > ~/.bashrc 
-
 # Actualizar Repositorio
 apt-get update
 
-# Descargar lzhiyongAndroidNDK, necesario para que gyp compilar sqlite3
+# Instalar Programas Necesarios
+pkg install -y wget nano clang make git ffmpeg nodejs-lts pkg-config
+
+# Agregar .bashrc para Inicio Automatico al Abrir Termux
+wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/.bashrc -O ~/.bashrc
+
+# Descargar lzhiyongAndroidNDK, necesario para que gyp compilale sqlite3, el cual utiliza Levanter.
 wget https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r27b-aarch64.zip -O ~/android-ndk.zip
 unzip ~/android-ndk.zip -d ~/android-ndk
 rm ~/android-ndk.zip
 
-# Descargar include.gypi.Informar donde esta AndroidNDK
+# Descargar include.gypi.Informa donde esta AndroidNDK
 wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/include.gypi -O ~/.gyp/include.gypi
 
 # Descarga lev.sh. Script de Inicio del Bot
 wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/lev.sh -O ~/lev.sh
+
 chmod +x ~/lev.sh
 
 # Clon Repo Levanter
