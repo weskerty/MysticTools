@@ -7,6 +7,8 @@ apt-get update && \
 # Instalar Programas ""Necesarios"". No recuerdo cual es la dependencia necesaria, algun dia vere cuales estan de mas.
 pkg install -ypython nano clang make git ffmpeg nodejs-lts pkg-config libxml2 libxslt matplotlib xorgproto rust binutils wget build-essential libvips python-pip glib openjdk-21 file libsqlite sqlite && \
 pip install cython wheel setuptools python-dotenv && \
+export ANDROID_NDK_HOME=~/android-ndk/android-ndk-r27b && \
+export PATH=$ANDROID_NDK_HOME:$PATH && \
 # Crear directorios necesarios
 mkdir -p ~/.gyp && \
 mkdir -p ~/android-ndk && \
