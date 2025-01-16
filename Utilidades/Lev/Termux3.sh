@@ -5,22 +5,26 @@ pkg install -y tur-repo x11-repo && \
 # Actualizar Repositorio
 apt-get update && \
 # Instalar Programas Necesarios
-pkg install -y wget nano clang make git ffmpeg nodejs-lts pkg-config && \
+pkg install -y curl nano clang make git ffmpeg nodejs-lts pkg-config && \
+# Crear directorios necesarios
+mkdir -p ~/.gyp && \
+mkdir -p ~/android-ndk && \
+mkdir -p ~/levanter && \
 # Agregar .bashrc para Inicio Automático al Abrir Termux
-wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/.bashrc -O ~/.bashrc && \
+curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/.bashrc -o ~/.bashrc && \
 # Descargar lzhiyongAndroidNDK, necesario para que gyp compile sqlite3, el cual utiliza Levanter
-#wget https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r27b-aarch64.zip -O ~/android-ndk.zip && \
-#unzip ~/android-ndk.zip -d ~/android-ndk && \
-#rm ~/android-ndk.zip && \
+curl -fsSL https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r27b-aarch64.zip -o ~/android-ndk.zip && \
+unzip ~/android-ndk.zip -d ~/android-ndk && \
+rm ~/android-ndk.zip && \
 # Descargar include.gypi. Informa donde está AndroidNDK
-wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/include.gypi -O ~/.gyp/include.gypi && \
+curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/include.gypi -o ~/.gyp/include.gypi && \
 # Descargar lev.sh. Script de Inicio del Bot
-wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/lev.sh -O ~/lev.sh && \
+curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/lev.sh -o ~/lev.sh && \
 chmod +x ~/lev.sh && \
 # Clonar Repo Levanter
 git clone https://github.com/lyfe00011/levanter.git ~/levanter && \
 # Descargar config.env específico
-wget https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/config.env -O ~/levanter/config.env && \
+curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/config.env -o ~/levanter/config.env && \
 # Instalar Yarn y PM2 requeridos por Levanter
 npm install -g yarn && \
 yarn global add pm2 && \
