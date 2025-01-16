@@ -4,8 +4,9 @@
 pkg install -y tur-repo x11-repo && \
 # Actualizar Repositorio
 apt-get update && \
-# Instalar Programas Necesarios
-pkg install -y python nano clang make git ffmpeg nodejs-lts pkg-config && \
+# Instalar Programas ""Necesarios"". No recuerdo cual es la dependencia necesaria, algun dia vere cuales estan de mas.
+pkg install -ypython nano clang make git ffmpeg nodejs-lts pkg-config libxml2 libxslt matplotlib xorgproto rust binutils wget build-essential libvips python-pip glib openjdk-21 file libsqlite sqlite && \
+pip install cython wheel setuptools python-dotenv && \
 # Crear directorios necesarios
 mkdir -p ~/.gyp && \
 mkdir -p ~/android-ndk && \
