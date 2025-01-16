@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Mantener Termux Abierto.
+termux-wake-lock
+
 # Instalar repositorio de Comunidad
 pkg install -y tur-repo x11-repo && \
 # Actualizar Repositorio
