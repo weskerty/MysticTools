@@ -1,5 +1,9 @@
 termux-wake-lock
 
+export ANDROID_NDK_HOME=~/android-ndk/android-ndk-r27b
+export PATH=$ANDROID_NDK_HOME:$PATH
+
+
 # Colores mensajes
 RED='\033[0;31m'
 GREEN='\033[0;32m'
