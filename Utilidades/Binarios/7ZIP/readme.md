@@ -1,4 +1,5 @@
 Agrego esto para facilitar la descarga ya que el repositorio de github tiene nombres de versiones diferentes dificultandome la descarga, espero no se tome como apropiamiento indebido Repo Oficial: [https://github.com/ip7z/7zip/releases](https://github.com/fastfetch-cli/fastfetch/blob/dev/README.md)
+
 Lo siento, demasiadas carpetas me dieron dolor de cabeza.
 Si alguien quiere solucionar esto, puede hacerlo sin problemas.
 La idea es descargar la última versión del repositorio oficial, descomprimirla y dejarla en media/bin/fastfetch
