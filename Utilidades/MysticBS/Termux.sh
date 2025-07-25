@@ -1,7 +1,24 @@
 #!/bin/bash
 
+# Presentacion
+echo -e "\e[1;32m
+  _______                             
+ |__   __|                            
+    | | ___ _ __ _ __ ___  _   ___  __
+    | |/ _ \ '__| '_ ` _ \| | | \ \/ /
+    | |  __/ |  | | | | | | |_| |>  < 
+    |_|\___|_|  |_| |_| |_|\__,_/_/\_\
+                                      
+ \e[0m"           
+
+echo 
+echo -e "\e[1;33m⚠️ ACEPTA LOS PERMISOS CUANDO APAREZCAN \e[0m"
+sleep 5
+
 # Persmisos Termux
+Echo 
 termux-setup-storage
+sleep 7
 termux-wake-lock
 apt-get update &&
 # Instalar repositorio de Comunidad
