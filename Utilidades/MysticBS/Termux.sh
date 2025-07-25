@@ -9,7 +9,7 @@ echo -e "\e[1;33m⚠️ ACEPTA LOS PERMISOS CUANDO APAREZCAN \e[0m"
 echo -e "\e[1;33m⚠️ CONCEDE PERMISOS DE ALMACENAMIENTO Y EJECUCION \e[0m"
 sleep 5
 
-echo -e "\e[1;32m🔧 Configurando permisos de Termux...\e[0m"
+echo -e "\e[1;32m🔧 Solicitando Permisos...\e[0m"
 echo 
 termux-setup-storage
 sleep 7
