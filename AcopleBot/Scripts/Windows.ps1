@@ -15,7 +15,7 @@ $programas = @(
     "libwebp", # Para Stickers Webp
     "git", # Para Actualizacion del Bot
     "nodejs", # Ejecutor del Bot
-	#"ffmpeg", # Para Multimedia General
+	"ffmpeg", # Para Multimedia General
     "python3" # Extra para Plugins Especificos
 )
 
