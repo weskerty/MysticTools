@@ -39,7 +39,7 @@ mkdir -p ~/.gyp && \
 mkdir -p ~/android-ndk && \
 
 echo -e "\e[1;32m⬇️ Descargando Android NDK...\e[0m"
-curl -fSL https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r27b-aarch64.zip -o ~/android-ndk.zip && \
+wget -O ~/android-ndk.zip https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r27b-aarch64.zip && \
 
 echo -e "\e[1;32m📂 Descomprimiendo Android NDK...\e[0m"
 unzip ~/android-ndk.zip -d ~/android-ndk && \
