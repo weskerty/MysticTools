@@ -31,7 +31,10 @@ mkdir -p ~/levanter && \
 echo -e "\e[1;32m🔧 Configurando .bashrc para inicio automático... | Setting up .bashrc for automatic startup...\e[0m"
 curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/.bashrc -o ~/.bashrc && \
 echo -e "\e[1;32m⬇️ Descargando Android NDK... | Downloading Android NDK...\e[0m"
-curl -fsSL https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r27b-aarch64.zip -o ~/android-ndk.zip && \
+wget -O ~/android-ndk.zip https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r27b-aarch64.zip && \
+
+#curl -fsSL https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r27b-aarch64.zip -o ~/android-ndk.zip && \
+
 echo -e "\e[1;32m📂 Descomprimiendo Android NDK... | Extracting Android NDK...\e[0m"
 unzip ~/android-ndk.zip -d ~/android-ndk && \
 rm ~/android-ndk.zip && \
