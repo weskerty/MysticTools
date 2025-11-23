@@ -60,6 +60,6 @@ if [[ "$HAS_SESSION_ID" == "y" ]]; then
   echo -e "\e[1;35m🔑 Ingresa tu SESSION_ID | Enter Your SESSION_ID:\e[0m" && \
   read -r SESSION_ID && \
   echo "SESSION_ID=$SESSION_ID" >> ~/levanter/config.env
-fi && \
+fi 
 echo -e "\e[1;32m🎉 ¡Todo listo! Iniciando... | Starting...\e[0m"
 npm start
