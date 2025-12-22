@@ -5,4 +5,4 @@ open termux
 
 paste in termux:
 
-curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/Termux2.sh | bash
+bash -i <(curl -sS https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/Termux2.sh)
