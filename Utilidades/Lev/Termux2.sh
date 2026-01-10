@@ -36,7 +36,7 @@ wget -O ~/android-ndk.7z "https://github.com/lzhiyong/termux-ndk/releases/downlo
 #curl -fsSL https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r27b-aarch64.zip -o ~/android-ndk.zip && \
 
 echo -e "\e[1;32m📂 Descomprimiendo Android NDK... | Extracting Android NDK...\e[0m"
-7z x ~/android-ndk.7z -o~/android-ndk && rm ~/android-ndk.7z && \
+7z x ~/android-ndk.7z -o/data/data/com.termux/files/home/android-ndk && rm ~/android-ndk.7z && \
 echo -e "\e[1;32m📋 Descargando archivo de configuración gyp... | Downloading gyp configuration file...\e[0m"
 curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/include.gypi -o ~/.gyp/include.gypi && \
 echo -e "\e[1;32m📜 Descargando script de inicio del bot... | Downloading bot startup script...\e[0m"
