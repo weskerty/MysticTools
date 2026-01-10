@@ -18,7 +18,7 @@ pkg install -y tur-repo x11-repo && \
 echo -e "\e[1;32m🔄 Actualizando repositorio... | Updating repository...\e[0m"
 apt-get update && \
 echo -e "\e[1;32m⚙️ Instalando programitas necesarios... | Installing necessary programs...\e[0m"
-pkg install -y python nano clang make git ffmpeg nodejs-22 pkg-config libxml2 libxslt matplotlib xorgproto rust binutils wget build-essential libvips python-pip glib openjdk-21 file libsqlite sqlite && \
+pkg install -y python nano clang make git ffmpeg nodejs-22 pkg-config libxml2 libxslt matplotlib xorgproto rust binutils wget build-essential libvips python-pip glib openjdk-21 file p7zip && \
 echo -e "\e[1;32m🐍 Instalando dependencias de Python... | Installing Python dependencies...\e[0m"
 pip install cython wheel setuptools python-dotenv && \
 echo -e "\e[1;32m🌍 Configurando variables de entorno... | Setting up environment variables...\e[0m"
@@ -31,13 +31,12 @@ mkdir -p ~/levanter && \
 echo -e "\e[1;32m🔧 Configurando .bashrc para inicio automático... | Setting up .bashrc for automatic startup...\e[0m"
 curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/.bashrc -o ~/.bashrc && \
 echo -e "\e[1;32m⬇️ Descargando Android NDK... | Downloading Android NDK...\e[0m"
-wget -O ~/android-ndk.zip https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r27b-aarch64.zip && \
+wget -O ~/android-ndk.7z "https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r29-aarch64.7z" && \
 
 #curl -fsSL https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r27b-aarch64.zip -o ~/android-ndk.zip && \
 
 echo -e "\e[1;32m📂 Descomprimiendo Android NDK... | Extracting Android NDK...\e[0m"
-unzip ~/android-ndk.zip -d ~/android-ndk && \
-rm ~/android-ndk.zip && \
+7z x ~/android-ndk.7z -o~/android-ndk && rm ~/android-ndk.7z && \
 echo -e "\e[1;32m📋 Descargando archivo de configuración gyp... | Downloading gyp configuration file...\e[0m"
 curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/include.gypi -o ~/.gyp/include.gypi && \
 echo -e "\e[1;32m📜 Descargando script de inicio del bot... | Downloading bot startup script...\e[0m"
