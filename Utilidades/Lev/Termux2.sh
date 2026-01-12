@@ -8,7 +8,7 @@ echo -e "\e[1;33m⚠️ CONCEDE PERMISOS DE ALMACENAMIENTO Y EJECUCION | GRANT S
 sleep 5
 echo -e "\e[1;32m🔧 Solicitando Permisos... | Requesting Permissions...\e[0m"
 echo 
-termux-setup-storage
+printf 'n\n' | termux-setup-storage
 sleep 7
 termux-wake-lock
 echo -e "\e[1;32m📦 Actualizando repositorios... | Updating repositories...\e[0m"
