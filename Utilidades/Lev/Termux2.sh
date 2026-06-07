@@ -28,7 +28,7 @@ curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/mai
 echo -e "\e[1;32m⬇️ Descargando Android NDK... | Downloading Android NDK...\e[0m"
 wget -O ~/android-ndk.7z "https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r29-aarch64.7z" && \
 echo -e "\e[1;32m📂 Descomprimiendo Android NDK... | Extracting Android NDK...\e[0m"
-7z x ~/android-ndk.7z -o~/android-ndk && rm ~/android-ndk.7z && \
+7z x -y ~/android-ndk.7z -o~/android-ndk && rm ~/android-ndk.7z && \
 echo -e "\e[1;32m🌍 Configurando... | Setting up...\e[0m"
 NDK_DIR=$(ls -d ~/android-ndk/android-ndk-*/ 2>/dev/null | head -1) && \
 export ANDROID_NDK_HOME="${NDK_DIR%/}" && \
