@@ -1,5 +1,3 @@
-#!/bin/bash
-# Presentacion
 echo -e "\e[1;36m┌─────────────────────────────────┐\e[0m"
 echo -e "\e[1;36m│ \e[1;32m🚀 Levanter Termux Installer \e[1;36m│\e[0m"
 echo -e "\e[1;36m└─────────────────────────────────┘\e[0m"
@@ -7,7 +5,7 @@ echo -e "\e[1;33m⚠️ ACEPTA LOS PERMISOS CUANDO APAREZCAN | ACCEPT PERMISSION
 echo -e "\e[1;33m⚠️ CONCEDE PERMISOS DE ALMACENAMIENTO Y EJECUCION | GRANT STORAGE AND EXECUTION PERMISSIONS \e[0m"
 sleep 5
 echo -e "\e[1;32m🔧 Solicitando Permisos... | Requesting Permissions...\e[0m"
-echo 
+echo
 printf 'n\n' | termux-setup-storage
 sleep 7
 termux-wake-lock
@@ -21,9 +19,6 @@ echo -e "\e[1;32m⚙️ Instalando programitas necesarios... | Installing necess
 pkg install -y python nano clang make git ffmpeg nodejs-22 pkg-config libxml2 libxslt matplotlib xorgproto rust binutils wget build-essential libvips python-pip glib openjdk-21 file p7zip && \
 echo -e "\e[1;32m🐍 Instalando dependencias de Python... | Installing Python dependencies...\e[0m"
 pip install cython wheel setuptools python-dotenv && \
-echo -e "\e[1;32m🌍 Configurando variables de entorno... | Setting up environment variables...\e[0m"
-export ANDROID_NDK_HOME=~/android-ndk/android-ndk-r27b && \
-export PATH=$ANDROID_NDK_HOME:$PATH && \
 echo -e "\e[1;32m📁 Creando directorios necesarios... | Creating necessary directories...\e[0m"
 mkdir -p ~/.gyp && \
 mkdir -p ~/android-ndk && \
@@ -32,11 +27,12 @@ echo -e "\e[1;32m🔧 Configurando .bashrc para inicio automático... | Setting 
 curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/.bashrc -o ~/.bashrc && \
 echo -e "\e[1;32m⬇️ Descargando Android NDK... | Downloading Android NDK...\e[0m"
 wget -O ~/android-ndk.7z "https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r29-aarch64.7z" && \
-
-#curl -fsSL https://github.com/lzhiyong/termux-ndk/releases/download/android-ndk/android-ndk-r27b-aarch64.zip -o ~/android-ndk.zip && \
-
 echo -e "\e[1;32m📂 Descomprimiendo Android NDK... | Extracting Android NDK...\e[0m"
-7z x ~/android-ndk.7z -o/data/data/com.termux/files/home/android-ndk && rm ~/android-ndk.7z && \
+7z x ~/android-ndk.7z -o~/android-ndk && rm ~/android-ndk.7z && \
+echo -e "\e[1;32m🌍 Configurando... | Setting up...\e[0m"
+NDK_DIR=$(ls -d ~/android-ndk/android-ndk-*/ 2>/dev/null | head -1) && \
+export ANDROID_NDK_HOME="${NDK_DIR%/}" && \
+export PATH=$ANDROID_NDK_HOME:$PATH && \
 echo -e "\e[1;32m📋 Descargando archivo de configuración gyp... | Downloading gyp configuration file...\e[0m"
 curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/include.gypi -o ~/.gyp/include.gypi && \
 echo -e "\e[1;32m📜 Descargando script de inicio del bot... | Downloading bot startup script...\e[0m"
@@ -59,6 +55,6 @@ if [[ "$HAS_SESSION_ID" == "y" ]]; then
   echo -e "\e[1;35m🔑 Ingresa tu SESSION_ID | Enter Your SESSION_ID:\e[0m" && \
   read -r SESSION_ID && \
   echo "SESSION_ID=$SESSION_ID" >> ~/levanter/config.env
-fi 
+fi
 echo -e "\e[1;32m🎉 ¡Todo listo! Iniciando... | Starting...\e[0m"
 npm start
