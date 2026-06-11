@@ -16,7 +16,7 @@ pkg install -y tur-repo x11-repo && \
 echo -e "\e[1;32m🔄 Actualizando repositorio... | Updating repository...\e[0m"
 apt-get update && \
 echo -e "\e[1;32m⚙️ Instalando programitas necesarios... | Installing necessary programs...\e[0m"
-pkg install -y python nano clang make git ffmpeg nodejs-22 pkg-config libxml2 libxslt matplotlib xorgproto rust binutils wget build-essential libvips python-pip glib openjdk-21 file p7zip && \
+pkg install -y python nano clang make git ffmpeg nodejs-lts npm pkg-config libxml2 libxslt matplotlib xorgproto binutils wget build-essential libvips python-pip glib openjdk-21 file p7zip && \
 echo -e "\e[1;32m🐍 Instalando dependencias de Python... | Installing Python dependencies...\e[0m"
 pip install cython wheel setuptools python-dotenv && \
 echo -e "\e[1;32m📁 Creando directorios necesarios... | Creating necessary directories...\e[0m"
