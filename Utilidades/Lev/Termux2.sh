@@ -16,7 +16,7 @@ pkg install -y tur-repo x11-repo && \
 echo -e "\e[1;32m🔄 Actualizando repositorio... | Updating repository...\e[0m"
 apt-get update && \
 echo -e "\e[1;32m⚙️ Instalando programitas necesarios... | Installing necessary programs...\e[0m"
-pkg install -y python nano clang make git ffmpeg nodejs-lts npm pkg-config libxml2 libxslt matplotlib xorgproto binutils wget build-essential libvips python-pip glib openjdk-21 file p7zip && \
+pkg install -y python nano clang make git ffmpeg nodejs-lts npm yarn pkg-config libxml2 libxslt matplotlib xorgproto binutils wget build-essential libvips python-pip glib openjdk-21 file p7zip && \
 echo -e "\e[1;32m🐍 Instalando dependencias de Python... | Installing Python dependencies...\e[0m"
 pip install cython wheel setuptools python-dotenv && \
 echo -e "\e[1;32m📁 Creando directorios necesarios... | Creating necessary directories...\e[0m"
@@ -44,7 +44,6 @@ git clone https://github.com/lyfe00011/levanter.git ~/levanter && \
 echo -e "\e[1;32m⚙️ Descargando configuración específica... | Downloading specific configuration...\e[0m"
 curl -fsSL https://raw.githubusercontent.com/weskerty/MysticTools/refs/heads/main/Utilidades/Lev/config.env -o ~/levanter/config.env && \
 echo -e "\e[1;32m📦 Instalando Yarn y PM2... | Installing Yarn and PM2...\e[0m"
-npm install -g yarn && \
 yarn global add pm2 && \
 echo -e "\e[1;32m🔧 Instalando dependencias de Levanter... | Installing Levanter dependencies...\e[0m"
 cd ~/levanter && \
