@@ -43,11 +43,12 @@ if ! { apt-get update </dev/null && apt-get "${APT_OPTS[@]}" full-upgrade </dev/
 fi
 
 echo -e "${G}Instalando dependencias...${N}"
-PKGS=(python nodejs-lts git ffmpeg yarn build-essential python-pip libxml2 libxslt)
+PKGS=(python nodejs-lts git ffmpeg yarn build-essential pkg-config python-pip libxml2 libxslt libvips)
 if ! apt-get "${APT_OPTS[@]}" install "${PKGS[@]}" </dev/null; then
   fix_apt
   apt-get "${APT_OPTS[@]}" install "${PKGS[@]}" </dev/null || { echo -e "${R}Fallo la instalacion de dependencias.${N}"; exit 1; }
 fi
+pip install setuptools </dev/null || { echo -e "${R}Fallo pip install setuptools.${N}"; exit 1; }
 
 echo -e "${G}Configurando node-gyp para Termux (sin NDK)...${N}"
 mkdir -p ~/.gyp
@@ -75,14 +76,11 @@ SUDO = ""
 FORCE_LOGOUT = "false"
 VPS = "true"
 DISABLE_START_MESSAGE = "false"
-RMBG_KEY = ""
-APPROVE = "all"
 PREFIX = "."
 STICKER_PACKNAME = "by LyFE"
 ALWAYS_ONLINE = "true"
 WARN_LIMIT = "3"
-BRAINSHOP = "159501,6pq8dPiYt7PdqHz3"
-MAX_UPLOAD = "1000"
+MAX_UPLOAD = "1900"
 REJECT_CALL = "false"
 TZ = "America/Asuncion"
 AUTO_STATUS_VIEW = "false"
